@@ -40,11 +40,11 @@ table.dataTable tbody th, table.dataTable tbody td {
 													<select name="categories" id="categories" class="form-control">
 														<option value="">Category Search</option>
 														<?php 
-														$query = "SELECT * FROM categories ORDER BY assets_category ASC";
+														$query = "SELECT * FROM assets GROUP BY category ORDER BY category ASC";
 														$result = mysqli_query($db, $query);
 														while($row = mysqli_fetch_array($result))
 														{
-															echo '<option value="'.$row["assets_category"].'">'.$row["assets_category"].'</option>';
+															echo '<option value="'.$row["category"].'">'.$row["category"].'</option>';
 														}
 														?>
 													</select>

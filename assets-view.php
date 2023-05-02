@@ -33,7 +33,7 @@
 							<div class="row">
 							<?php
 							$id = $_GET['id'];
-							$sql	=	"select * from `assets` where `inventory_sl_no`='$id'";
+							$sql	=	"select * from `assets` where `id`='$id'";
 							$result = mysqli_query($db, $sql);
 							$row=mysqli_fetch_array($result);
 							?>
@@ -59,7 +59,7 @@
 									</tr>
 									<tr>
 										<th>Country Origin:</th>
-										<td><?php echo $row['origin'] ?></td>
+										<td>---</td>
 									</tr>
 									<tr>
 										<th>Purchase Date:</th>

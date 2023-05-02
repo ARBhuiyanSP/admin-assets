@@ -1,11 +1,10 @@
 <?php
 //fetch.php
 include('../config.php');
-$column = array("assets.id", "assets.user", "assets.owner", "categories.assets_category", "assets.inventory_sl_no");
+$column = array("assets.id", "assets.user", "assets.owner", "assets.category", "assets.inventory_sl_no");
 $query = "
  SELECT * FROM assets 
- INNER JOIN categories 
- ON categories.assets_category = assets.category 
+  
 ";
 $query .= " WHERE ";
 if(isset($_POST["is_categories"]))
@@ -17,7 +16,7 @@ if(isset($_POST["search"]["value"]))
  $query .= '(assets.id LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR assets.user LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR assets.owner LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR categories.assets_category LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR assets.category LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR assets.inventory_sl_no LIKE "%'.$_POST["search"]["value"].'%") ';
 }
 
@@ -27,7 +26,7 @@ if(isset($_POST["order"]))
 }
 else
 {
- $query .= 'ORDER BY assets.id DESC ';
+ $query .= 'ORDER BY assets.id ASC ';
 }
 
 $query1 = '';
@@ -50,7 +49,7 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = $row["id"];
  $sub_array[] = $row["user"];
  $sub_array[] = $row["owner"];
- $sub_array[] = $row["assets_category"];
+ $sub_array[] = $row["category"];
  $sub_array[] = $row["inventory_sl_no"];
  $sub_array[] = $actionData;
  $data[] = $sub_array;
@@ -58,8 +57,8 @@ while($row = mysqli_fetch_array($result))
 }
 
 function get_receive_list_action_data($row){
-    $edit_url = 'assets-view.php?id='.$row["inventory_sl_no"];
-    $view_url = 'assets-view.php?id='.$row["inventory_sl_no"];
+    $edit_url = 'assets-view.php?id='.$row["id"];
+    $view_url = 'assets-view.php?id='.$row["id"];
     $action = "";
 	
     $action.='<span><a class="action-icons c-delete" href="'.$edit_url.'" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>';
