@@ -1,24 +1,24 @@
 <?php
 //fetch.php
-include('../connection/connect.php');
-$column = array("inv_receive.id", "inv_receive.mrr_no", "inv_receive.mrr_date", "suppliers.name", "inv_receive.receive_total");
+include('../config.php');
+$column = array("assets.id", "assets.user", "assets.owner", "categories.assets_category", "assets.inventory_sl_no");
 $query = "
- SELECT * FROM inv_receive 
- INNER JOIN suppliers 
- ON suppliers.code = inv_receive.supplier_id 
+ SELECT * FROM assets 
+ INNER JOIN categories 
+ ON categories.assets_category = assets.category 
 ";
 $query .= " WHERE ";
-if(isset($_POST["is_suppliers"]))
+if(isset($_POST["is_categories"]))
 {
- $query .= "inv_receive.supplier_id = '".$_POST["is_suppliers"]."' AND ";
+ $query .= "assets.category = '".$_POST["is_categories"]."' AND ";
 }
 if(isset($_POST["search"]["value"]))
 {
- $query .= '(inv_receive.id LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR inv_receive.mrr_no LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR inv_receive.mrr_date LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR suppliers.name LIKE "%'.$_POST["search"]["value"].'%" ';
- $query .= 'OR inv_receive.receive_total LIKE "%'.$_POST["search"]["value"].'%") ';
+ $query .= '(assets.id LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR assets.user LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR assets.owner LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR categories.assets_category LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR assets.inventory_sl_no LIKE "%'.$_POST["search"]["value"].'%") ';
 }
 
 if(isset($_POST["order"]))
@@ -27,7 +27,7 @@ if(isset($_POST["order"]))
 }
 else
 {
- $query .= 'ORDER BY inv_receive.id DESC ';
+ $query .= 'ORDER BY assets.id DESC ';
 }
 
 $query1 = '';
@@ -37,9 +37,9 @@ if($_POST["length"] != 1)
  $query1 .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
-$number_filter_row = mysqli_num_rows(mysqli_query($conn, $query));
+$number_filter_row = mysqli_num_rows(mysqli_query($db, $query));
 
-$result = mysqli_query($conn, $query . $query1);
+$result = mysqli_query($db, $query . $query1);
 
 $data = array();
 
@@ -47,19 +47,19 @@ while($row = mysqli_fetch_array($result))
 {
 	$actionData     =   get_receive_list_action_data($row);
  $sub_array = array();
- $sub_array[] = $row["mrr_no"];
- $sub_array[] = $row["mrr_date"];
- $sub_array[] = $row["name"];
- $sub_array[] = $row["no_of_material"];
- $sub_array[] = $row["receive_total"];
+ $sub_array[] = $row["id"];
+ $sub_array[] = $row["user"];
+ $sub_array[] = $row["owner"];
+ $sub_array[] = $row["assets_category"];
+ $sub_array[] = $row["inventory_sl_no"];
  $sub_array[] = $actionData;
  $data[] = $sub_array;
+ 
 }
 
 function get_receive_list_action_data($row){
-    //$edit_url = 'receive_edit.php?edit_id='.$row["mrr_no"];
-    $edit_url = '#';
-    $view_url = 'receive-view.php?no='.$row["mrr_no"];
+    $edit_url = 'assets-view.php?id='.$row["inventory_sl_no"];
+    $view_url = 'assets-view.php?id='.$row["inventory_sl_no"];
     $action = "";
 	
     $action.='<span><a class="action-icons c-delete" href="'.$edit_url.'" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>';
@@ -67,46 +67,20 @@ function get_receive_list_action_data($row){
 							
 							
 	 $action.='<span><a class="action-icons c-approve" href="'.$view_url.'" title="View"><i class="fas fa-eye text-success mborder"></i></a></span>';
-							
-							
-	
-											
-    //$action.='<a href="#"><i class="fa fa-trash text-danger"></i></a>';
-	
-	/* if($row["status"]=="Pending"){
-		$action.='<span><a title="Take Action" class="btn btn-sm btn-danger" href="'.$edit_url.'">
-                                <span class="fa fa-exchange"> <b>Take Action</b></span>
-                            </a></span>';
-	}else{
-    $action.='<span><a title="View Details" class="btn btn-sm btn-success" href="'.$edit_url.'">
-                                <span class="fa fa-exchange"> <b>View Details</b></span>
-                            </a></span>';
-	}
-	
-	<span><a class="action-icons c-approve" href="receive-view.php?no=<?php echo $item['mrr_no']; ?>" title="View"><i class="fas fa-eye text-success mborder"></i></a></span>
-										<span><a class="action-icons c-delete" href="receive_edit.php?edit_id=<?php echo $item['id']; ?>" title="edit"><i class="fa fa-edit text-info mborder"></i></a></span>
-										<?php if($_SESSION['logged']['user_type'] == 'superAdmin') {?>
-										<span><a class="action-icons c-delete" href="receive_approve.php?mrr=<?php echo $item['mrr_no']; ?>" title="approve"><i class="fa fa-check text-info mborder"></i></a></span>
-										<?php } ?>
-										<span><a class="action-icons c-delete" href="#" title="delete"><i class="fa fa-trash text-danger mborder"></i></a></span> */
-	
-	
-    //$action.='<a href="#"><i class="fa fa-trash text-danger"></i></a>';
-
     return $action;
 
 }
 
-function get_all_data($conn)
+function get_all_data($db)
 {
- $query = "SELECT * FROM inv_receive";
- $result = mysqli_query($conn, $query);
+ $query = "SELECT * FROM assets";
+ $result = mysqli_query($db, $query);
  return mysqli_num_rows($result);
 }
 
 $output = array(
  "draw"    => intval($_POST["draw"]),
- "recordsTotal"  =>  get_all_data($conn),
+ "recordsTotal"  =>  get_all_data($db),
  "recordsFiltered" => $number_filter_row,
  "data"    => $data
 );

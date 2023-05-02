@@ -12,7 +12,6 @@
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css" rel="stylesheet" type="text/css"/>
-
 <style>
 table.dataTable tbody th, table.dataTable tbody td {
 	padding: 3px 10px;
@@ -30,29 +29,17 @@ table.dataTable tbody th, table.dataTable tbody td {
                                 <div class="container">
 									<h3>Assets List <button class="btn btn-success btn-sm" onclick="location.href='assets-entry.php';" >New Asset Entry</button></h3>
 									<div class="clearfix"></div>
-									<table id="receive_data_list" class="table table-bordered table-striped">
+									<table id="emp_list" class="table table-bordered table-striped">
 										<thead>
 											<tr>
-												<th>ID</th>
-												<th>User</th>
+												<th>SL No</th>
 												<th>Owner</th>
-												<th>
-													<select name="categories" id="categories" class="form-control">
-														<option value="">Category Search</option>
-														<?php 
-														$query = "SELECT * FROM categories ORDER BY assets_category ASC";
-														$result = mysqli_query($db, $query);
-														while($row = mysqli_fetch_array($result))
-														{
-															echo '<option value="'.$row["assets_category"].'">'.$row["assets_category"].'</option>';
-														}
-														?>
-													</select>
-												</th>
-												<th>Inventory SL No</th>
-												<th>Action</th>
+												<th>Location</th>
+												<th>Category</th>
+												<th>Price</th>
 											</tr>
 										</thead>
+										<tbody></tbody>
 									</table>
 								</div>
 							</div>
@@ -130,45 +117,42 @@ table.dataTable tbody th, table.dataTable tbody td {
         <script src="assets/js/jquery.app.js"></script>
 		
 		<script src="assets/js/tabledit.min.js"></script>
-        	<script type="text/javascript" language="javascript" >
-$(document).ready(function(){
- 
- load_receive_data();
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                var dataTable = $("#emp_list").DataTable({
+					processing: true,
+                    serverSide: true,
+                    order: [],
+                    ajax: {
+                        url: "fetch.php",
+                        type: "POST",
+                    },
+                });
 
- function load_receive_data(is_categories)
- {
-  var dataTable = $('#receive_data_list').DataTable({
-   "processing":true,
-   "serverSide":true,
-   "order":[],
-   "ajax":{
-    url:"fetch/fetch_receive_table.php",
-    type:"POST",
-    data:{is_categories:is_categories}
-   },
-   "columnDefs":[
-    {
-     "targets":[2],
-     "orderable":false,
-    },
-   ],
-  });
- }
-
- $(document).on('change', '#categories', function(){
-  var categories = $(this).val();
-  $('#receive_data_list').DataTable().destroy();
-  if(categories != '')
-  {
-   load_receive_data(categories);
-  }
-  else
-  {
-   load_receive_data();
-  }
- });
-});
-</script>
+                $("#emp_list").on("draw.dt", function () {
+                    $("#emp_list").Tabledit({
+                        url: "edit.php",
+                        dataType: "json",
+                        columns: {
+                            identifier: [0, "id"],
+                            editable: [
+                                [1, "owner"],
+								[2, "location"],
+                                [3, "category", '{"Center Table":"Center Table","1seater sofa":"1seater sofa"}'],
+                                [4, "price"],
+                            ],
+                        },
+                        restoreButton: false,
+                        onSuccess: function (data, textStatus, jqXHR) {
+                            if (data.action == "delete") {
+                                $("#" + data.id).remove();
+                                $("#emp_list").DataTable().ajax.reload();
+                            }
+                        },
+                    });
+                });
+            });
+        </script>
 
 		
 		

@@ -50,12 +50,13 @@
                                     <div class="wigdet-two-content">
                                         <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Conference Chair</p>
 										<?php 
-											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Conference Chair'");
+											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table'");
 											$conchaircount=mysqli_num_rows($conchair);
 										?>
                                         <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
 										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Conference Chair' and `assign_status`=''");
+											//$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table' and `assign_status`=''");
+											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table'");
 											$conchairavlcount=mysqli_num_rows($conchairavl);
 										?>
                                         <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
@@ -73,7 +74,7 @@
 										?>
                                         <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
 										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Visitor Chair' and `assign_status`=''");
+											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Visitor Chair' ");
 											$conchairavlcount=mysqli_num_rows($conchairavl);
 										?>
                                         <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
@@ -91,7 +92,7 @@
 										?>
                                         <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
 										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Self Cabinet' and `assign_status`=''");
+											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Self Cabinet' ");
 											$conchairavlcount=mysqli_num_rows($conchairavl);
 										?>
                                         <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
@@ -109,7 +110,7 @@
 										?>
                                         <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
 										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Drawer Unit' and `assign_status`=''");
+											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Drawer Unit' ");
 											$conchairavlcount=mysqli_num_rows($conchairavl);
 										?>
                                         <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
@@ -123,53 +124,17 @@
                            <div class="col-lg-12">
 									<center><h4 class="page-title"> Assets List</h4></center>
 									<?php $results = mysqli_query($db, "SELECT * FROM assets order by id"); ?>
-									<table id="datatable" class="table table-striped table-bordered">
+									<table id="emp_list" class="table table-bordered table-striped">
 										<thead>
 											<tr>
-												<th>INVENTORY SL NO</th>
-												<th>CATEGORY</th>
-												<th>OWNER</th>
-												<th>Assign To</th>
-												<th>Last Inspection date</th>
-												<th>Action</th>
+												<th>SL No</th>
+												<th>Owner</th>
+												<th>Location</th>
+												<th>Category</th>
+												<th>Price</th>
 											</tr>
 										</thead>
-										<tbody>
-										<?php while ($row = mysqli_fetch_array($results)) { ?>
-											<tr>
-												<td><?php echo $row['inventory_sl_no']; ?></td>
-												<td><?php echo $row['category']; ?></td>
-												<td><?php echo $row['owner']; ?></td>
-												<td>
-												<?php
-												//echo $row['user'];
-												$product_id=$row['inventory_sl_no']; 
-												$sqlpri	= "select * from `product_assign` where `product_id`='$product_id'";
-												$resultpri = mysqli_query($db, $sqlpri);
-												$rowpri=mysqli_fetch_array($resultpri);
-												if($rowpri['employee_id']){
-												echo $rowpri['employee_id'];
-												}else{
-													echo '---';
-												} 
-												?>
-												</td>
-												<td><?php 
-												if($row['inspaction_date']){
-													$rDate = strtotime($row['inspaction_date']);
-													$rfDate = date("jS \of F Y",$rDate);
-													echo $rfDate;
-												}else{
-													echo '---';
-												}
-												?>
-												</td>
-												<td>
-													<a href="assets-view.php?id=<?php echo $row['inventory_sl_no']; ?>" class="edit_btn" ><button><i class="fa fa-eye text-success"></i> Details</button></a>
-												</td>
-											</tr>
-										<?php } ?>
-										</tbody>
+										<tbody></tbody>
 									</table>
 							</div>
 						</div>
@@ -274,39 +239,7 @@
         <script src="plugins/datatables/dataTables.scroller.min.js"></script>
         <script src="plugins/datatables/dataTables.colVis.js"></script>
         <script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
-<script type="text/javascript">
-            $(document).ready(function () {
-                $('#datatable').dataTable();
-                $('#datatable-keytable').DataTable({keys: true});
-                $('#datatable-responsive').DataTable();
-                $('#datatable-colvid').DataTable({
-                    "dom": 'C<"clear">lfrtip',
-                    "colVis": {
-                        "buttonText": "Change columns"
-                    }
-                });
-                $('#datatable-scroller').DataTable({
-                    ajax: "../plugins/datatables/json/scroller-demo.json",
-                    deferRender: true,
-                    scrollY: 380,
-                    scrollCollapse: true,
-                    scroller: true
-                });
-                var table = $('#datatable-fixed-header').DataTable({fixedHeader: true});
-                var table = $('#datatable-fixed-col').DataTable({
-                    scrollY: "300px",
-                    scrollX: true,
-                    scrollCollapse: true,
-                    paging: false,
-                    fixedColumns: {
-                        leftColumns: 1,
-                        rightColumns: 1
-                    }
-                });
-            });
-            TableManageButtons.init();
 
-        </script>
 
         <!-- Counter js  -->
         <script src="plugins/waypoints/jquery.waypoints.min.js"></script>
@@ -375,6 +308,43 @@
             }, function (start, end, label) {
                 console.log(start.toISOString(), end.toISOString(), label);
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            });
+        </script>
+		<script src="assets/js/tabledit.min.js"></script>
+		<script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                var dataTable = $("#emp_list").DataTable({
+					processing: true,
+                    serverSide: true,
+                    order: [],
+                    ajax: {
+                        url: "fetch.php",
+                        type: "POST",
+                    },
+                });
+
+                $("#emp_list").on("draw.dt", function () {
+                    $("#emp_list").Tabledit({
+                        url: "edit.php",
+                        dataType: "json",
+                        columns: {
+                            identifier: [0, "id"],
+                            editable: [
+                                [1, "owner"],
+								[2, "location"],
+                                [3, "category", '{"Center Table":"Center Table","1seater sofa":"1seater sofa"}'],
+                                [4, "price"],
+                            ],
+                        },
+                        restoreButton: false,
+                        onSuccess: function (data, textStatus, jqXHR) {
+                            if (data.action == "delete") {
+                                $("#" + data.id).remove();
+                                $("#emp_list").DataTable().ajax.reload();
+                            }
+                        },
+                    });
+                });
             });
         </script>
 

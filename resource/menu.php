@@ -5,7 +5,7 @@
 			<a href="dashboard.php" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span> Dashboard </span></a>
 		</li>
 		<li>
-			<a href="assets.php" class="waves-effect"><i class="mdi mdi-altimeter"></i><span> Assets Purchase </span></a>
+			<a href="assets.php" class="waves-effect"><i class="mdi mdi-altimeter"></i><span> Assets  </span></a>
 		</li>
 		<li>
 			<a href="assign-entry.php" class="waves-effect"><i class="mdi mdi-arrange-bring-to-front"></i><span> Assign/Transfer </span></a>

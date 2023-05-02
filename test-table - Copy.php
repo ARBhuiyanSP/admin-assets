@@ -32,7 +32,7 @@
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title">Assets List</h4>
+                                    <h4 class="page-title">Products List</h4>
 
                                     <div class="clearfix"></div>
                                 </div>
@@ -43,29 +43,56 @@
                         <div class="row">
                            <div class="col-lg-12">
                                 <div class="container">
-									<table id="receive_data_list" class="table table-bordered table-striped">
+									<table id="example" class="display" style="width:100%">
 										<thead>
 											<tr>
-												<th>ID</th>
-												<th>User</th>
-												<th>Owner</th>
-												<th>
-													<select name="categories" id="categories" class="form-control">
-														<option value="">Category Search</option>
-														<?php 
-														$query = "SELECT * FROM categories ORDER BY assets_category ASC";
-														$result = mysqli_query($db, $query);
-														while($row = mysqli_fetch_array($result))
-														{
-															echo '<option value="'.$row["assets_category"].'">'.$row["assets_category"].'</option>';
-														}
-														?>
-													</select>
-												</th>
-												<th>Inventory SL No</th>
+												<th>INVENTORY SL NO</th>
+												<th>CATEGORY</th>
+												<th>OWNER</th>
+												<th>USER</th>
 												<th>Action</th>
 											</tr>
 										</thead>
+										<tbody>
+											<?php $results = mysqli_query($db, "SELECT * FROM assets order by id"); 
+												  while ($row = mysqli_fetch_array($results)) { ?>
+										
+										
+											<tr>
+												<td><?php echo $row['inventory_sl_no']; ?></td>
+												<td><?php echo $row['category']; ?></td>
+												<td><?php echo $row['owner']; ?></td>
+												<td>
+												<?php
+												$product_id=$row['id']; 
+												$sqlpri	= "select * from product_assign where product_id=$product_id";
+												$resultpri = mysqli_query($db, $sqlpri);
+												$rowpri=mysqli_fetch_array($resultpri);
+												echo $rowpri['employee_id'];
+												?>
+												</td>
+												
+												<td>
+													<!-- <a href="add-assets.php?del=<?php //echo $row['id']; ?>" class="del_btn" onclick = "if (! confirm('Sure to delete it?')) return false;"><button><i class="fa fa-trash text-danger"></i></button></a> -->
+													<a href="assets.php?edit=<?php echo $row['id']; ?>" class="edit_btn" ><button><i class="fa fa-edit text-success"></i></button></a>
+													<a href="assets-view.php?id=<?php echo $row['inventory_sl_no']; ?>" class="edit_btn" ><button><i class="fa fa-eye text-success"></i></button></a>
+													<button onclick="window.location.href = 'qrprintview.php?id=<?php echo $row['id'] ?>'" class=''><i class="fa fa-print text-success"> QR</i></button>
+												</td>
+											</tr>
+											
+											<?php } ?>
+											
+											
+										</tbody>
+										<tfoot>
+											<tr>
+												<th>INVENTORY SL NO</th>
+												<th>CATEGORY</th>
+												<th>OWNER</th>
+												<th>USER</th>
+												<th>Action</th>
+											</tr>
+										</tfoot>
 									</table>
 								</div>
 							</div>
@@ -133,6 +160,30 @@
         <script src="plugins/datatables/dataTables.scroller.min.js"></script>
         <script src="plugins/datatables/dataTables.colVis.js"></script>
         <script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy',
+            'csv',
+            'excel',
+            'pdf',
+            {
+                extend: 'print',
+                text: 'Print all (not just selected)',
+                exportOptions: {
+                    modifier: {
+                        selected: null
+                    }
+                }
+            }
+        ],
+        select: true
+    } );
+} );
+
+        </script>
 
         <!-- Counter js  -->
         <script src="plugins/waypoints/jquery.waypoints.min.js"></script>
@@ -156,45 +207,7 @@
 		
 		
 		
-	<script type="text/javascript" language="javascript" >
-$(document).ready(function(){
- 
- load_receive_data();
-
- function load_receive_data(is_categories)
- {
-  var dataTable = $('#receive_data_list').DataTable({
-   "processing":true,
-   "serverSide":true,
-   "order":[],
-   "ajax":{
-    url:"fetch/fetch_receive_table.php",
-    type:"POST",
-    data:{is_categories:is_categories}
-   },
-   "columnDefs":[
-    {
-     "targets":[2],
-     "orderable":false,
-    },
-   ],
-  });
- }
-
- $(document).on('change', '#categories', function(){
-  var categories = $(this).val();
-  $('#receive_data_list').DataTable().destroy();
-  if(categories != '')
-  {
-   load_receive_data(categories);
-  }
-  else
-  {
-   load_receive_data();
-  }
- });
-});
-</script>
+	
 
     </body>
 </html>
