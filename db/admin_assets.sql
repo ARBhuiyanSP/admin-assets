@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2023 at 01:23 PM
+-- Generation Time: May 02, 2023 at 08:02 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -52,7 +52,7 @@ CREATE TABLE `assets` (
 
 INSERT INTO `assets` (`id`, `purchase_date`, `user`, `user_name`, `owner`, `dept`, `floor`, `location`, `category`, `price`, `brand`, `model`, `bill_note_req_rlp_no`, `inventory_sl_no`, `quality`, `inspaction_date`) VALUES
 (1, '15/12/18', '', '', 'SPB', '', '', 'KT', 'Center Table', '8,682/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-01', 'New', '2019-05-03 00:00:00'),
-(2, '15/12/18', '', '', 'SPB', '', '', 'sfghgfh', 'Center Table', '8,682/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-02', 'New', '2019-05-03 00:00:00'),
+(2, '15/12/18', '', '', 'SPB', '', '', '', 'Center Table', '8,682/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-02', 'New', '2019-05-03 00:00:00'),
 (3, '15/12/18', '', '', 'SPB', '', '', '', '1seater sofa', '9,269/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-03', 'New', '2019-05-03 00:00:00'),
 (4, '15/12/18', '', '', 'SPB', '', '', '', '1seater sofa', '9,269/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-04', 'New', '2019-05-03 00:00:00'),
 (5, '15/12/18', '', '', 'SPB', '', '', '', '1seater sofa', '21,182/-', 'OTOBI', '', 'SPL/Admin/Gen/Note-66', 'SPB-19-05', 'New', '2019-05-03 00:00:00'),
@@ -266,7 +266,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `cat_id`, `assets_category`, `status`, `created_at`, `updated_at`) VALUES
-(52, '01', 'Facial Tissue', '', NULL, NULL);
+(53, 'TB-001', 'Center Table', '', NULL, NULL),
+(54, 'TB-002', 'Table', '', NULL, NULL),
+(55, 'CH-001', 'Chair', '', NULL, NULL),
+(56, 'CH-002', '1seater sofa', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -4088,7 +4091,7 @@ ALTER TABLE `assets`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `companies`
