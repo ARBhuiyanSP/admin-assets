@@ -126,7 +126,7 @@ $id=$_GET['id'];
 								 document.body.innerHTML = originalContents;
 							}
 							</script>
-							<button class="btn btn-default" onclick="window.location.href = 'products_list.php'"><i class="fa fa-hand-o-right" aria-hidden="true" style="  font-size: 17px;"> Back To Products List</i></button>
+							<button class="btn btn-default" onclick="window.location.href = 'assets.php'"><i class="fa fa-hand-o-right" aria-hidden="true" style="  font-size: 17px;"> Back To Assets List</i></button>
                     </div> <!-- container -->
                     </div> <!-- container -->
 					

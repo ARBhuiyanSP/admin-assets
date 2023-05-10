@@ -1,7 +1,10 @@
 <?php include('resource/header.php');
-if(isset($_POST['submit'])){
+
+	if($_GET['id']){
+		$id = $_GET['id'];
+	}else{
 	$id = $_POST['id'];
-}	
+	}
 ?>
             <!-- Left Sidebar End -->
 			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -34,7 +37,6 @@ if(isset($_POST['submit'])){
 							<!-- end row -->
 							<div class="row">
 							<?php
-							$id = $_POST['id'];
 							$sql	=	"select * from `assets` where `id`='$id'";
 							$result = mysqli_query($db, $sql);
 							$row=mysqli_fetch_array($result);
@@ -65,7 +67,7 @@ if(isset($_POST['submit'])){
 									</tr>
 									<tr>
 										<th>Country Origin:</th>
-										<td><?php echo $row['origin'] ?></td>
+										<td>---</td>
 									</tr>
 									<tr>
 										<th>Purchase Date:</th>

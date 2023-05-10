@@ -70,10 +70,6 @@ $id=$_GET['id'];
 											<td><?php echo $rowp['inventory_sl_no'] ?></td>
 										</tr>
 										<tr>
-											<th>Country Origin:</th>
-											<td><?php echo $rowp['origin'] ?></td>
-										</tr>
-										<tr>
 											<th>Purchase Date:</th>
 											<td><?php echo $rowp['purchase_date'] ?></td>
 										</tr>

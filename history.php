@@ -52,8 +52,6 @@ if(isset($_POST['submit'])){
 										<tr>
 											<th>Model:</th>
 											<td><?php echo $row['model'] ?></td>
-											<th>Origin:</th>
-											<td><?php echo $row['origin'] ?></td>
 											<th>Purchase Date:</th>
 											<td><?php echo $row['purchase_date'] ?></td>
 										</tr>

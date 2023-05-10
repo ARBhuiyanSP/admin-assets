@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
 									</tr>
 									<tr>
 										<th>Country Origin:</th>
-										<td><?php echo $row['origin'] ?></td>
+										<td>---</td>
 									</tr>
 									<tr>
 										<th>Last Inspaction Date:</th>

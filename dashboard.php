@@ -43,81 +43,33 @@
 
 
                         <div class="row">
-
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card-box widget-box-two widget-two-primary">
-                                    <i class="mdi mdi-google-cardboard widget-two-icon"></i>
-                                    <div class="wigdet-two-content">
-                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Conference Chair</p>
+							<?php 
+								$sql	=	"select * from `assets` group by category";
+								$result = mysqli_query($db, $sql);
+								while($row=mysqli_fetch_array($result))
+								{
+							?>
+							<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+								<div class="card-box widget-box-two widget-two-success">
+									<h5 style="border:1px solid gray;padding:3px;border-radius:5px;"><?php echo $row['category']; ?></h5>
+									<p>
 										<?php 
-											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table'");
-											$conchaircount=mysqli_num_rows($conchair);
+											$category = $row['category'];
+											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category'");
+											$numbCount=mysqli_num_rows($numbQuery);
 										?>
-                                        <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
-										<?php 
-											//$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table' and `assign_status`=''");
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Center Table'");
-											$conchairavlcount=mysqli_num_rows($conchairavl);
+										<span> <b>Total Qty : <?php echo $numbCount; ?></b></span></br>
+										<?php
+											$stockQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category' AND `assign_status`='Not Assign'");
+											$stockCount=mysqli_num_rows($stockQuery);
 										?>
-                                        <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-							<div class="col-lg-3 col-md-6">
-                                 <div class="card-box widget-box-two widget-two-warning">
-                                    <i class="mdi mdi-seat-recline-extra widget-two-icon"></i>
-                                    <div class="wigdet-two-content">
-                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Visitor Chair</p>
-										<?php 
-											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Visitor Chair'");
-											$conchaircount=mysqli_num_rows($conchair);
-										?>
-                                        <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
-										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Visitor Chair' ");
-											$conchairavlcount=mysqli_num_rows($conchairavl);
-										?>
-                                        <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-							<div class="col-lg-3 col-md-6">
-                                 <div class="card-box widget-box-two widget-two-danger">
-                                    <i class="mdi mdi-seat-recline-normal widget-two-icon"></i>
-                                    <div class="wigdet-two-content">
-                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Self Cabinet</p>
-										<?php 
-											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Self Cabinet'");
-											$conchaircount=mysqli_num_rows($conchair);
-										?>
-                                        <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
-										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Self Cabinet' ");
-											$conchairavlcount=mysqli_num_rows($conchairavl);
-										?>
-                                        <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-							<div class="col-lg-3 col-md-6">
-                                 <div class="card-box widget-box-two widget-two-danger">
-                                    <i class="mdi mdi-seat-recline-normal widget-two-icon"></i>
-                                    <div class="wigdet-two-content">
-                                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Drawer Unit</p>
-										<?php 
-											$conchair = mysqli_query($db, "SELECT * FROM `assets` where `category`='Drawer Unit'");
-											$conchaircount=mysqli_num_rows($conchair);
-										?>
-                                        <h2><span data-plugin="counterup"><?php echo $conchaircount; ?></span> <small><i class="mdi mdi-arrow-up text-success"></i></small></h2>
-										<?php 
-											$conchairavl = mysqli_query($db, "SELECT * FROM `assets` where `category`='Drawer Unit' ");
-											$conchairavlcount=mysqli_num_rows($conchairavl);
-										?>
-                                        <h3 class="text-success m-0"><b>Instock:</b> <?php echo $conchairavlcount; ?></h3>
-                                    </div>
-                                </div>
-                            </div><!-- end col -->
-
+										<span> <b>Stock Qty : <?php echo $stockCount; ?></b></span>
+									</p>
+								</div>
+							</div>
+							<?php 
+								}
+							?>
                         </div>
                         <!-- end row -->
 						 <div class="row">

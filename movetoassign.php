@@ -16,11 +16,12 @@ include('config.php');
 	mysqli_query($db, $sql);
 
 
-    $sql2	=	"UPDATE `assets` set `assign_status`='assigned' where `inventory_sl_no`='$product_id'";
+    $sql2	=	"UPDATE `assets` set`user`='$employee_id', `assign_status`='Assigned' where `inventory_sl_no`='$product_id'";
 
     mysqli_query($db, $sql2);
 
 echo "<script>alert('1 Record Update Added')</script>";
-ECHO "<script>location.href='assignqrview.php?id=$product_id'</script>";
+//ECHO "<script>location.href='assignqrview.php?id=$product_id'</script>";
+ECHO "<script>location.href='assets.php'</script>";
 
 ?>

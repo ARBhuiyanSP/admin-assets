@@ -42,11 +42,11 @@
 										<th>Category:</th>
 										<td>
 										<?php 
-										$cat_id = $row['category'];
-										$sqlc	=	"select `assets_category` from `categories` where `id`='$cat_id'";
+										echo $cat_id = $row['category'];
+										/* $sqlc	=	"select `assets_category` from `categories` where `id`='$cat_id'";
 										$resultc = mysqli_query($db, $sqlc);
 										$rowc=mysqli_fetch_array($resultc);
-										echo $rowc['assets_category']
+										echo $rowc['assets_category'] */
 										?>
 										</td>
 									</tr>
@@ -64,7 +64,7 @@
 									</tr>
 									<tr>
 										<th>Country Origin:</th>
-										<td><?php echo $row['origin'] ?></td>
+										<td></td>
 									</tr>
 									<tr>
 										<th>Purchase Date:</th>
@@ -83,7 +83,7 @@
 								<div class="col-xs-4">
 									<div class="form-group">
 										<?php 
-											$product_id= $row['id'];
+											$product_id= $row['inventory_sl_no'];
 											$sql2	= "SELECT * FROM `product_assign` WHERE `product_id`='$product_id' ORDER BY `id` DESC LIMIT 1 ;";
 											$result2 = mysqli_query($db, $sql2);
 											$row2=mysqli_fetch_array($result2);
@@ -121,7 +121,7 @@
 							</div>
 							<button class="btn btn-danger" type="submit" name="submit"> Return This Product</i></button>
 							<input type="hidden" name="id" value="<?php echo $row2['id'] ?>" />
-							<input type="hidden" name="product_id" value="<?php echo $product_id ?>" />
+							<input type="hidden" name="product_id" value="<?php echo $row['id'] ?>" />
 						</form>
                     </div> <!-- container -->
 

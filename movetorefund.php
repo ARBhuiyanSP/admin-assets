@@ -6,15 +6,9 @@ include('config.php');
 	$refund_date 	= $_POST['refund_date'];
 	$status 		= 'Refund';
 
-
-
-
 	$sql	=	"UPDATE `product_assign`  set `refund_date`='$refund_date', `status`='$status' where `id`='$id'";
-
 	mysqli_query($db, $sql);
-
-    $sql2	=	"UPDATE `assets`  set `assign_status`='' where `id`='$product_id'";
-
+    $sql2	=	"UPDATE `assets`  set `user`='', `assign_status`='Not Assign' where `id`='$product_id'";
     mysqli_query($db, $sql2);
 
 echo "<script>alert('1 Record Update Added')</script>";

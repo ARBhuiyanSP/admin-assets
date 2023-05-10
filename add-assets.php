@@ -104,7 +104,8 @@ if (isset($_POST['update'])) {
 				$category_id 			= $_POST['category_id'];
 				$catstr = substr($category_id,  0, 2);
 		$astno ='001';
-		$inventory_sl_no 		= $qstr.'-'.$datestr.'-'.$catstr.'-'.$astno;
+		$inventory_sl_no 		= $_POST['inventory_sl_no'];
+		//$inventory_sl_no 		= $qstr.'-'.$datestr.'-'.$catstr.'-'.$astno;
 		 
 		$tempDir = "images/qr_images/"; 
 		$todaysDate = date('Ymd');
@@ -131,20 +132,21 @@ if (isset($_POST['update'])) {
 	$brand 					= $_POST['brand'];
 	$model 					= $_POST['model'];
 	$quality 				= $_POST['quality'];
-	$warrenty 				= $_POST['warrenty'];
+	//$warrenty 				= $_POST['warrenty'];
 	$owner 					= $_POST['owner'];
 	$dept 					= $_POST['dept'];
 	$floor 					= $_POST['floor'];
 	$user 					= $_POST['user'];
-	$inventory_sl_no 		= $inventory_sl_no;
+	//$inventory_sl_no 		= $inventory_sl_no;
+	$inventory_sl_no 		= $_POST['inventory_sl_no'];
 	$purchase_date 			= $_POST['purchase_date'];
 	$ins_date 				= $_POST['ins_date'];
-	$year_manufacture 		= $_POST['year_manufacture'];
+	//$year_manufacture 		= $_POST['year_manufacture'];
 	$price 					= $_POST['price'];
 	$bill_note_req_rlp_no 	= $_POST['bill_note_req_rlp_no'];
-	$origin 				= $_POST['origin'];
+	//$origin 				= $_POST['origin'];
 
-	mysqli_query($db, "UPDATE `assets` SET `category`='$category_id',`brand`='$brand',`model`='$model',`quality`='$quality',`warrenty`='$warrenty',`owner`='$owner',`dept`='$dept',`floor`='$floor',`user`='$user',`inventory_sl_no`='$inventory_sl_no',`purchase_date`='$purchase_date',`year_manufacture`='$year_manufacture',`price`='$price',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`origin`='$origin', `qr_image`='$pngAbsoluteFilePath', `inspaction_date`='$ins_date' WHERE `id`=$id");
+	mysqli_query($db, "UPDATE `assets` SET `purchase_date`='$purchase_date',`user`='$user',`owner`='$owner',`dept`='$dept',`floor`='$floor',`category`='$category_id',`price`='$price',`brand`='$brand',`model`='$model',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`inventory_sl_no`='$inventory_sl_no',`quality`='$quality', `inspaction_date`='$ins_date',`qr_image`='$pngAbsoluteFilePath' WHERE `id`=$id");
 	$_SESSION['message'] = "<b style='color:green;'>Assets Updated!</b>"; 
 	header('location: assets.php');
 }
