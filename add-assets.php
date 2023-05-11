@@ -33,9 +33,9 @@ include "phpqrcode/qrlib.php";
 		// generate inventory serial no
 		$quality 				= $_POST['quality'];
 		$qstr					= $quality[0];
-			$purchase_date 			= $_POST['purchase_date'];
+			$purchase_date 		= $_POST['purchase_date'];
 			$datestr = substr($purchase_date, -2);
-				$category_id 			= $_POST['category_id'];
+				$category_id 	= $_POST['category_id'];
 				$catstr = substr($category_id,  0, 2);
 				
 				

@@ -20,7 +20,7 @@
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title">Floorwise Assets List</h4>
+                                    <h4 class="page-title">Divisionwise Assets List</h4>
                                 </div>
 							</div>
 						</div>
@@ -32,20 +32,20 @@
 									<div class="form-group">
 									<form action="" method="GET">
 										<div class="col-md-4">
-										   <label class="control-label">Floor</label>
-										   <select name="floor" class="form-control select2" required>
-												<option value="">Select Floor</option>
+										   <label class="control-label">Division</label>
+										   <select name="division" class="form-control select2" required>
+												<option value="">Select Division</option>
 												<?php
-												$sqlFloor="SELECT `floor` FROM `assets` GROUP BY `floor` ";
+												$sqlFloor="SELECT `owner` FROM `assets` GROUP BY `owner` ";
 												$resultFloor = mysqli_query($db,$sqlFloor);
 												while($rowFloor = mysqli_fetch_array($resultFloor)) {
-													if($_GET['floor'] == $rowFloor['floor']){
+													if($_GET['division'] == $rowFloor['owner']){
 													$selected	= 'selected';
 													}else{
 													$selected	= '';
 													}
 												?>
-												<option value="<?php echo $rowFloor['floor']; ?>" <?php echo $selected; ?>><?php echo $rowFloor['floor']; ?></option>
+												<option value="<?php echo $rowFloor['owner']; ?>" <?php echo $selected; ?>><?php echo $rowFloor['owner']; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -60,25 +60,25 @@
 										</div>
 										<div class="col-md-3" style="float:right;">
 										   <label class="control-label" style="color:#fff;">.</label>
-										   <button class="form-control btn btn-success" type="button" onclick="location.href='divisionwise_assets_list.php';"><i class=""></i> Divisionwise Assets List Search</button>
+										   <button class="form-control btn btn-success" type="button" onclick="location.href='floorwise_assets_list.php';"><i class=""></i> Floorwise Assets List Search</button>
 										</div>
 									</div>
 								</div>			
 							</div>
 						<?php
 							if(isset($_GET['submit'])){
-								$floor	= $_GET['floor'];	
+								$division	= $_GET['division'];	
 						?>
 						<div class="row" id="printableArea">
 							<center>
 								<p>
 									<img src="images/logoMenu.png" height="30px;"/><br>
-									<h3>Floorwise Assets List</h3>
+									<h3>Divisionwise Assets List</h3>
 									<?php 
-										$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `floor`='$floor'");
+										$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `owner`='$division'");
 										$numbCount=mysqli_num_rows($numbQuery);
 									?>
-									<h5><span style="border:1px solid gray; padding:3px;border-radius:5px;"><?php echo $floor; ?> | Total Qty : <?php echo $numbCount; ?></span></h5>
+									<h5><span style="border:1px solid gray; padding:3px;border-radius:5px;"><?php echo $division; ?> | Total Qty : <?php echo $numbCount; ?></span></h5>
 								</p>
 								<table id="" class="table table-bordered table-striped ">
 									<thead>
@@ -90,7 +90,7 @@
 									</thead>
 									<tbody>
 										<?php
-											$sql = "SELECT * FROM `assets` WHERE `floor` = '$floor'";
+											$sql = "SELECT * FROM `assets` WHERE `owner` = '$division'";
 											$result = mysqli_query($db, $sql);
 											while($row=mysqli_fetch_array($result))
 											{

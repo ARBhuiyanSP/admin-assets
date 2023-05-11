@@ -20,7 +20,7 @@
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title">Product Assign : Product Selection</h4>
+                                    <h4 class="page-title">Assets History Report</h4>
                                     
                                     <div class="clearfix"></div>
                                 </div>
@@ -28,36 +28,144 @@
 						</div>
                         <!-- end row -->
 
-						<form action="history.php" method="post">
+						
 							<div class="row">
 								<div class="form-horizontal">
 								
 									<div class="form-group">
-										<div class="col-md-12">
-										   <label class="control-label">Select Product For Assign Entry</label>
+									<form action="" method="GET">
+										<div class="col-md-4">
+										   <label class="control-label">Select Asset</label>
 										   <select name="id" class="form-control select2">
-												<option>Select Product</option>
+												<option>Select Asset</option>
 												<?php
 												$sqlvs="SELECT * FROM `assets`";
 												$resultvs = mysqli_query($db,$sqlvs);
 												while($rowvs = mysqli_fetch_array($resultvs)) {
+													if($_GET['id'] == $rowvs['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
 												?>
-												<option value="<?php echo $rowvs['id'] ?>"><?php echo $rowvs['category'] ?> || <?php echo $rowvs['inventory_sl_no'] ?></option>
+												<option value="<?php echo $rowvs['id'] ?>" <?php echo $selected; ?>><?php echo $rowvs['category'] ?> || <?php echo $rowvs['inventory_sl_no'] ?></option>
 												<?php } ?>
 											</select>
 										</div>
-									</div>
-									
-
-									<div class="form-group">
-									  <div class="col-md-offset-5">
-											<button class="btn btn-primary" type="submit" name="submit"><i class=""></i> Next</button>
-											<input type="button" name="back" id="back" class="btn btn-info" onclick="location.href = 'assets.php';" value="Back To Assets List" />
-									   </div>
+										<div class="col-md-2">
+										   <label class="control-label" style="color:#fff;">.</label>
+										   <button class="form-control btn btn-primary" type="submit" name="submit"><i class=""></i> SEARCH</button>
+										</div>
+									</form>
+										<div class="col-md-2" style="float:right;">
+										   <label class="control-label" style="color:#fff;">.</label>
+										   <button class="form-control btn btn-success" type="button" onclick="location.href='assets.php';"><i class=""></i> Assets List</button>
+										</div>
 									</div>
 								</div>			
 							</div>
-						</form>
+							<?php
+								if(isset($_GET['submit'])){
+									$id = $_GET['id'];
+								
+							?>
+							<div class="row" id="printableArea" style="display:block;">
+								<?php
+								$sql	=	"select * from `assets` where `id`='$id'";
+								$result = mysqli_query($db, $sql);
+								$row=mysqli_fetch_array($result);
+								?>
+								<center>
+									<h1 align="center"><img src="images/logoMenu.png" height="50"></h1>
+									<h2>SAIF POWERTEC LIMITED</h2>
+									<p>72,Mohakhali C/A, (8th Floor),Rupayan Center,Dhaka-1212,bangladesh</p>
+									<h3>Assets History Report</h3>
+									<table class="table" style="width:80%">
+										<tr>
+											<th>Category:</th>
+											<td><?php echo $row['category']; ?>
+											</td>
+											<th>Inventory No:</th>
+											<td><?php echo $row['inventory_sl_no'] ?></td>
+											<th>Brand:</th>
+											<td><?php echo $row['brand'] ?></td>
+											<td rowspan="2"><img src="<?php echo $row['qr_image'] ?>" height="100" /></td>
+											
+										</tr>
+										<tr>
+											<th>Model:</th>
+											<td><?php echo $row['model'] ?></td>
+											<th>Purchase Date:</th>
+											<td><?php echo $row['purchase_date'] ?></td>
+										</tr>
+									</table>
+								<table id="" class="table table-striped table-bordered" style="width:90%">
+									<thead>
+										<tr>
+											<th>Employee ID</th>
+											<th>Employee Name</th>
+											<th>Date From Assign</th>
+											<th>Date To Assign</th>
+										</tr>
+									</thead>
+									<tbody>
+									<?php
+										$product_id = $row['inventory_sl_no'];
+										$sqlh	=	"select * from `product_assign` where `product_id`='$product_id'";
+										$resulth = mysqli_query($db, $sqlh);
+										while ($rowh = mysqli_fetch_array($resulth)) { ?>
+									
+										<tr>
+											<td><?php echo $rowh['employee_id']; ?></td>
+											
+											<?php
+												$employee_id=$rowh['employee_id'];
+												$sqlemp	=	"select * from `employees` where `employee_id`='$employee_id'";
+												$resultemp = mysqli_query($db, $sqlemp);
+												$rowemp = mysqli_fetch_array($resultemp);
+											?>
+											<td><?php echo $rowemp['employee_name']; ?></td>
+											<td><?php 
+											if($rowh['assign_date']){
+												$rDate = strtotime($rowh['assign_date']);
+												$rfDate = date("jS \of F Y",$rDate);
+												echo $rfDate;
+											}else{
+												echo '---';
+											}
+											?>
+											</td>
+											<td><?php 
+											if($rowh['refund_date']){
+												$rfDate = strtotime($rowh['refund_date']);
+												$rffDate = date("jS \of F Y",$rfDate);
+												echo $rffDate;
+											}else{
+												echo '---';
+											}
+											?>
+											</td>
+										</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+								</center>
+							</div>
+								
+							<center><button class="btn btn-default" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="font-size: 17px;"> Print</i></button></center>					
+							<script>
+							function printDiv(divName) {
+								 var printContents = document.getElementById(divName).innerHTML;
+								 var originalContents = document.body.innerHTML;
+
+								 document.body.innerHTML = printContents;
+
+								 window.print();
+
+								 document.body.innerHTML = originalContents;
+							}
+							</script>
+							<?php } ?>
 					</div> <!-- container -->
                 </div> <!-- content -->
                 <footer class="footer text-right">
