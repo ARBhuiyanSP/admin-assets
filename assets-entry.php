@@ -12,21 +12,22 @@ include('add-assets.php');
 		$n=mysqli_fetch_array($resultup);
 		
 		
-			$category_id 			= $n['category'];
-			$brand 					= $n['brand'];
-			$model 					= $n['model'];
-			$quality 				= $n['quality'];
-			$warrenty 				= $n['warrenty'];
+			$purchase_date 			= $n['purchase_date'];
+			$user 					= $n['user'];
 			$owner 					= $n['owner'];
 			$dept 					= $n['dept'];
 			$floor 					= $n['floor'];
-			$user 					= $n['user'];
-			$inventory_sl_no 		= $n['inventory_sl_no'];
-			$purchase_date 			= $n['purchase_date'];
-			$ins_date 				= $n['inspaction_date'];
-			$year_manufacture 		= $n['year_manufacture'];
+			$location 					= $n['location'];
+			$category_id 			= $n['category'];
 			$price 					= $n['price'];
+			$brand 					= $n['brand'];
+			$model 					= $n['model'];
 			$bill_note_req_rlp_no 	= $n['bill_note_req_rlp_no'];
+			$inventory_sl_no 		= $n['inventory_sl_no'];
+			$quality 				= $n['quality'];
+			$ins_date 				= $n['inspaction_date'];
+			$warrenty 				= $n['warrenty'];
+			$year_manufacture 		= $n['year_manufacture'];
 			$origin 				= $n['origin'];
 	}
 	
@@ -104,7 +105,7 @@ include('add-assets.php');
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['cat_id'] ?>"><?php echo $rowd['assets_category'] ?></option>
+													<option value="<?php echo $rowd['assets_category'] ?>"><?php echo $rowd['assets_category'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -183,10 +184,17 @@ include('add-assets.php');
 													<option value="KT-14">KT-14</option>
 													<option value="KT-13">KT-13</option>
 													<option value="KT-12">KT-12</option>
+													<option value="KT-07">KT-07</option>
 													<option value="KT-05">KT-05</option>
 													<option value="KT-03">KT-03</option>
 													<option value="KT-02">KT-02</option>
 												</select>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label>Location</label>
+												<input class="form-control" type="text" name="location" value="" />
 											</div>
 										</div>
 										<div class="col-xs-4">
@@ -219,7 +227,7 @@ include('add-assets.php');
 												<input type="text" name="year_manufacture" class="form-control" value="<?php echo $year_manufacture; ?>" autocomplete="off">
 											</div>
 										</div>
-										<div class="col-xs-8">
+										<div class="col-xs-4">
 											<div class="form-group">
 												<label>Bill/Note/Req/RLP No</label>
 												<input type="text" name="bill_note_req_rlp_no" class="form-control" value="<?php echo $bill_note_req_rlp_no; ?>" autocomplete="off">

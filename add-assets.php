@@ -72,6 +72,7 @@ include "phpqrcode/qrlib.php";
 		$owner 					= $_POST['owner'];
 		$dept 					= $_POST['dept'];
 		$floor 					= $_POST['floor'];
+		$location 				= $_POST['location'];
 		$user 					= $_POST['user'];
 		$inventory_sl_no 		= $inventory_sl_no;
 		$purchase_date 			= $_POST['purchase_date'];
@@ -81,7 +82,7 @@ include "phpqrcode/qrlib.php";
 		$bill_note_req_rlp_no 	= $_POST['bill_note_req_rlp_no'];
 		$origin 				= $_POST['origin'];
 
-		mysqli_query($db, "INSERT INTO assets (category,brand,model,quality,warrenty,owner,dept,floor,user,inventory_sl_no,purchase_date,year_manufacture,price,bill_note_req_rlp_no,origin,qr_image,inspaction_date) VALUES ('$category_id','$brand','$model','$quality','$warrenty','$owner','$dept','$floor','$user','$inventory_sl_no','$purchase_date','$year_manufacture','$price','$bill_note_req_rlp_no','$origin','$pngAbsoluteFilePath','$ins_date')"); 
+		mysqli_query($db, "INSERT INTO `assets` (`purchase_date`,`user`,`owner`,`dept`,`floor`,`location`,`category`,`price`,`brand`,`model`,`bill_note_req_rlp_no`,`inventory_sl_no`,`quality`,`warrenty`,`year_manufacture`,`origin`,`assign_status`,`qr_image`) VALUES ('$purchase_date','$user','$owner','$dept','$floor','$location','$category_id','$price','$brand','$model','$bill_note_req_rlp_no','$inventory_sl_no','$quality','$warrenty','$year_manufacture','$origin','Assigned','$pngAbsoluteFilePath')"); 
 		$_SESSION['message'] = "<b style='color:green;'>Assets Saved</b>"; 
 		header('location: assets.php');
 	}
