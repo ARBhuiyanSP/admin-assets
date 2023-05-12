@@ -41,6 +41,8 @@
 				<li><a href="roles.php">User Role</a></li>
 				<li><a href="create_user.php">Add User</a></li>
 				<li><a href="user_list.php">Users List</a></li>
+				<li><a href="data_backup.php">Backup Data</a></li>
+				<li><a href="restore_site.php">Restore Data</a></li>
 			</ul>
 		</li>
 	</ul>
