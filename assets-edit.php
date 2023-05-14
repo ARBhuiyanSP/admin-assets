@@ -70,15 +70,7 @@ include('add-assets.php');
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
-
-<?php
-
-
- ?>
-
                         <div class="row">
-							
                             <div class="col-sm-12 card-box">
 								<button class="btn btn-success btn-sm" onclick="location.href='assets.php';" > Asset List</button>
 								<form method="post" action="add-assets.php" style="padding:15px;border-radius:5px;min-height:619px;">
