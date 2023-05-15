@@ -1,9 +1,4 @@
-
-<?php include('resource/header.php');
-
-
- ?>
-
+<?php include('resource/header.php'); ?>
 <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->
@@ -11,36 +6,27 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
-
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title"> Backup</h4>
+                                    <h4 class="page-title"> Data Backup</h4>
                                 </div>
-								
- 
-        <div>
-            <button class="btn btn-success" onclick="location.href='backup.php';">Click To Take Backup</button>
-        </div>
-
+								<div>
+									<button class="btn btn-success" onclick="location.href='backup.php';">Click To Take Backup</button>
+								</div>
 							</div>
 						</div>
                         <!-- end row -->
 					</div> <!-- container -->
                 </div> <!-- content -->
                 <footer class="footer text-right">
-                    2018 - <?php echo date('Y'); ?> © <a href="" target="blank">Saif Powertec</a>
+                    2018 - <?php echo date('Y'); ?> © <a href="" target="blank">Saif Powertec Ltd</a>
                 </footer>
             </div>
         </div>
-
-
-
 		<script>
             var resizefunc = [];
         </script>
-
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>

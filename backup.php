@@ -1,14 +1,10 @@
 <?php
-
 // Database configuration
 include('config.php');
-
-
 // Get All Table Names From the Database
 $tables = array();
 $sql = "SHOW TABLES";
 $result = mysqli_query($db, $sql);
-
 while ($row = mysqli_fetch_row($result)) {
     $tables[] = $row[0];
 }
