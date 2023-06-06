@@ -36,16 +36,16 @@
 										   <select name="floor" class="form-control select2" required>
 												<option value="">Select Floor</option>
 												<?php
-												$sqlFloor="SELECT `floor` FROM `assets` GROUP BY `floor` ";
+												$sqlFloor="SELECT `owner` FROM `assets` GROUP BY `owner` ";
 												$resultFloor = mysqli_query($db,$sqlFloor);
 												while($rowFloor = mysqli_fetch_array($resultFloor)) {
-													if($_GET['floor'] == $rowFloor['floor']){
+													if($_GET['owner'] == $rowFloor['owner']){
 													$selected	= 'selected';
 													}else{
 													$selected	= '';
 													}
 												?>
-												<option value="<?php echo $rowFloor['floor']; ?>" <?php echo $selected; ?>><?php echo $rowFloor['floor']; ?></option>
+												<option value="<?php echo $rowFloor['owner']; ?>" <?php echo $selected; ?>><?php echo $rowFloor['owner']; ?></option>
 												<?php } ?>
 											</select>
 										</div>
@@ -75,7 +75,7 @@
 									<img src="images/logoMenu.png" height="30px;"/><br>
 									<h3>Floorwise Assets List</h3>
 									<?php 
-										$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `floor`='$floor'");
+										$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `owner`='$floor'");
 										$numbCount=mysqli_num_rows($numbQuery);
 									?>
 									<h5><span style="border:1px solid gray; padding:3px;border-radius:5px;"><?php echo $floor; ?> | Total Qty : <?php echo $numbCount; ?></span></h5>
@@ -87,12 +87,11 @@
 											<th>Inventory SL No</th>
 											<th>Assign Status</th>
 											<th>User EMP ID</th>
-											<th>User Name</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-											$sql = "SELECT * FROM `assets` WHERE `floor` = '$floor'";
+											$sql = "SELECT * FROM `assets` WHERE `owner` = '$floor'";
 											$result = mysqli_query($db, $sql);
 											while($row=mysqli_fetch_array($result))
 											{
@@ -101,16 +100,11 @@
 											<td><?php echo $row['category']; ?></td>
 											<td><?php echo $row['inventory_sl_no']; ?></td>
 											<td><?php echo $row['assign_status']; ?></td>
-											<td><?php echo $row['user']; ?></td>
+											<td><?php
+
+													echo $row['user']; ?></td>
 											
 											
-											<?php 
-												$user_id = $row['user'];
-												$sqlEmp = "Select * FROM `employees` where employee_id ='$user_id'";
-												$resultEmp = mysqli_query($db, $sqlEmp);
-												$rowEmp=mysqli_fetch_array($resultEmp);
-											?>
-											<td><?php echo $rowEmp['employee_name']; ?></td>
 										</tr>
 										<?php } ?>
 									</tbody>
