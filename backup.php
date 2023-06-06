@@ -13,17 +13,17 @@ $sqlScript = "";
 foreach ($tables as $table) {
     
     // Prepare SQLscript for creating table structure
-    $query = "SHOW CREATE TABLE $table";
-    $result = mysqli_query($db, $query);
-    $row = mysqli_fetch_row($result);
+    $query 			= "SHOW CREATE TABLE $table";
+    $result 		= mysqli_query($db, $query);
+    $row 			= mysqli_fetch_row($result);
     
-    $sqlScript .= "\n\n" . $row[1] . ";\n\n";
+    $sqlScript 		.= "\n\n" . $row[1] . ";\n\n";
     
     
-    $query = "SELECT * FROM $table";
-    $result = mysqli_query($db, $query);
+    $query 			= "SELECT * FROM $table";
+    $result 		= mysqli_query($db, $query);
     
-    $columnCount = mysqli_num_fields($result);
+    $columnCount 	= mysqli_num_fields($result);
     
     // Prepare SQLscript for dumping data for each table
     for ($i = 0; $i < $columnCount; $i ++) {

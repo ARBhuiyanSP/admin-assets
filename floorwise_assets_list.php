@@ -86,6 +86,8 @@
 											<th>Category</th>
 											<th>Inventory SL No</th>
 											<th>Assign Status</th>
+											<th>User EMP ID</th>
+											<th>User Name</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -99,6 +101,16 @@
 											<td><?php echo $row['category']; ?></td>
 											<td><?php echo $row['inventory_sl_no']; ?></td>
 											<td><?php echo $row['assign_status']; ?></td>
+											<td><?php echo $row['user']; ?></td>
+											
+											
+											<?php 
+												$user_id = $row['user'];
+												$sqlEmp = "Select * FROM `employees` where employee_id ='$user_id'";
+												$resultEmp = mysqli_query($db, $sqlEmp);
+												$rowEmp=mysqli_fetch_array($resultEmp);
+											?>
+											<td><?php echo $rowEmp['employee_name']; ?></td>
 										</tr>
 										<?php } ?>
 									</tbody>

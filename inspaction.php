@@ -73,15 +73,15 @@ if(isset($_POST['submit'])){
 								<div class="col-xs-4">
 									<div class="form-group">
 										<label>Inspaction Date</label>
-										<input name="ins_date" type="text" class="form-control" id="rndate" value="" size="30" autocomplete="off"/>
+										<input name="ins_date" type="date" class="form-control" id="rndate" value="" size="30" autocomplete="off"/>
 									</div>
 								</div>
 								<div class="col-xs-4">
 									<div class="form-group">
 										<label>Status</label>
 										<select id="dv" name="status" class="form-control select2">
-											<option value="New">OK</option>
-											<option value="Old">Not Ok</option>
+											<option value="active">OK</option>
+											<option value="damaged">Not Ok</option>
 										</select>
 									</div>
 								</div>
