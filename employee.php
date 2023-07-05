@@ -4,12 +4,12 @@ include('add-employee.php');
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
 		$update = true;
-		$record = mysqli_query($db, "SELECT * FROM employees WHERE id=$id");
+		$record = mysqli_query($db, "SELECT * FROM `inv_employee` WHERE `id`='$id'");
 
 		if (count($record) == 1 ) {
 			$n           	= mysqli_fetch_array($record);
-			$employee_id 	= $n['employee_id'];
-			$employee_name 	= $n['employee_name'];
+			$employee_id 	= $n['employeeid'];
+			$employee_name 	= $n['name'];
 			$division 		= $n['division'];
 			$department 	= $n['department'];
 			$designation 	= $n['designation'];
@@ -131,7 +131,7 @@ include('add-employee.php');
                             <div class="col-sm-9">
                                 <div class="card-box table-responsive">
                                     <h4 class="m-t-0 header-title"><b>Employee List</b></h4>
-                                    <?php $results = mysqli_query($db, "SELECT * FROM employees order by id"); ?>
+                                    <?php $results = mysqli_query($db, "SELECT * FROM inv_employee order by id"); ?>
 									<table id="datatable-buttons" class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -146,31 +146,12 @@ include('add-employee.php');
 										<tbody>
 										<?php while ($row = mysqli_fetch_array($results)) { ?>
 											<tr>
-												<td><?php echo $row['employee_id']; ?></td>
-												<td><?php echo $row['employee_name']; ?></td>
-												<td>
-													<?php 
-													$div_id=$row['division'];
-													$sqldiv	= "select division_name from divisions where id=$div_id";
-													$resultdiv = mysqli_query($db, $sqldiv);
-													$rowdiv=mysqli_fetch_array($resultdiv);
-													echo $rowdiv['division_name'];
-													?>
-												</td>
-												<td><?php 
-													$dept_id=$row['department'];
-													$sqldept	= "select dept_name from departments where id=$dept_id";
-													$resultdept = mysqli_query($db, $sqldept);
-													$rowdept=mysqli_fetch_array($resultdept);
-													echo $rowdept['dept_name'];
-													?></td>
-												<td><?php 
-													$deg_id=$row['designation'];
-													$sqldeg	= "select deg_name from designations where id=$deg_id";
-													$resultdeg = mysqli_query($db, $sqldeg);
-													$rowdeg=mysqli_fetch_array($resultdeg);
-													echo $rowdeg['deg_name'];
-													?></td>
+												<td><?php echo $row['employeeid']; ?></td>
+												<td><?php echo $row['name']; ?></td>
+												<td><?php echo $row['division']; ?></td>
+												<td><?php echo $row['department']; ?></td>
+												<td><?php echo $row['designation']; ?></td>
+												
 												<td>
 													<a href="employee.php?edit=<?php echo $row['id']; ?>" class="edit_btn" ><button><i class="fa fa-edit text-success"></i></button></a>
 												

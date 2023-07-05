@@ -146,6 +146,22 @@ include('add-assets.php');
 										</div>
 										<div class="col-xs-4">
 											<div class="form-group">
+												<label>User</label>
+												<select id="dv" name="user" class="form-control select2">
+													<option value="<?php echo $user ?>"><?php echo $user ?></option>
+													<?php 
+													$sqldg	= "select employeeid,name from inv_employee ORDER BY id ASC";
+													$resultdg = mysqli_query($db, $sqldg);
+													while($rowdg=mysqli_fetch_array($resultdg))
+														{
+													?>
+													<option value="<?php echo $rowdg['employeeid'] ?>"><?php echo $rowdg['employeeid'] ?> | <?php echo $rowdg['name'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
 												<label>DIVISION</label>
 												<select id="dv" name="owner" class="form-control select2">
 													<option value="<?php echo $owner ?>"><?php echo $owner ?></option>
@@ -195,22 +211,6 @@ include('add-assets.php');
 											<div class="form-group">
 												<label>Location</label>
 												<input class="form-control" type="text" name="location" value="" />
-											</div>
-										</div>
-										<div class="col-xs-4">
-											<div class="form-group">
-												<label>User</label>
-												<select id="dv" name="user" class="form-control select2">
-													<option value="<?php echo $user ?>"><?php echo $user ?></option>
-													<?php 
-													$sqldg	= "select employee_id,employee_name from employees ORDER BY id ASC";
-													$resultdg = mysqli_query($db, $sqldg);
-													while($rowdg=mysqli_fetch_array($resultdg))
-														{
-													?>
-													<option value="<?php echo $rowdg['employee_id'] ?>"><?php echo $rowdg['employee_id'] ?> | <?php echo $rowdg['employee_name'] ?></option>
-													<?php } ?>
-												</select>
 											</div>
 										</div>
 										
