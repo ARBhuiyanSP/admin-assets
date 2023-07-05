@@ -64,10 +64,10 @@ include('add-categories.php');
 								<?php endif ?>
 								<form method="post" action="add-categories.php" >
 									<input type="hidden" name="id" value="<?php echo $id; ?>">
-									<div class="form-group">
+									<!-- <div class="form-group">
 										<label>Category ID</label>
 										<input type="text" name="cat_id" class="form-control" value="<?php echo $cat_id; ?>">
-									</div>
+									</div> --->
 									<div class="form-group">
 										<label>Category Name</label>
 										<input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
