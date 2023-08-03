@@ -9,7 +9,6 @@
         <link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
-						<link rel = "stylesheet" type = "text/css" href = "css/jquery-ui.css"/>
 
 
 
@@ -20,17 +19,17 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-						<!-- notification message -->
-						<?php if (isset($_SESSION['success'])) : ?>
-						<div class="error success" >
-							<h3>
-								<?php 
-									echo $_SESSION['success']; 
-									unset($_SESSION['success']);
-								?>
-							</h3>
-						</div>
-						<?php endif ?>
+		<!-- notification message -->
+		<?php if (isset($_SESSION['success'])) : ?>
+			<div class="error success" >
+				<h3>
+					<?php 
+						echo $_SESSION['success']; 
+						unset($_SESSION['success']);
+					?>
+				</h3>
+			</div>
+		<?php endif ?>
 
                         <div class="row">
 							<div class="col-xs-12">
@@ -41,8 +40,41 @@
 							</div>
 						</div>
                         <!-- end row -->
+
+
+                        <div class="row">
+							<?php 
+								$sql	=	"select * from `assets` group by category";
+								$result = mysqli_query($db, $sql);
+								while($row=mysqli_fetch_array($result))
+								{
+							?>
+							<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+								<div class="card-box widget-box-two widget-two-success">
+									<h5 style="border:1px solid gray;padding:3px;border-radius:5px;"><?php echo $row['category']; ?></h5>
+									<p>
+										<?php 
+											$category = $row['category'];
+											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category'");
+											$numbCount=mysqli_num_rows($numbQuery);
+										?>
+										<span> <b>Total Qty : <?php echo $numbCount; ?></b></span></br>
+										<?php
+											$stockQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category' AND `assign_status`='Not Assign'");
+											$stockCount=mysqli_num_rows($stockQuery);
+										?>
+										<span> <b>Stock Qty : <?php echo $stockCount; ?></b></span>
+									</p>
+								</div>
+							</div>
+							<?php 
+								}
+							?>
+                        </div>
+                        <!-- end row -->
+						<link rel = "stylesheet" type = "text/css" href = "css/jquery-ui.css"/>
 						<div class = "row">
-							<div class = "col-md-12">
+							<div class = "col-md-12 well">
 								<hr style = "border-top:1px dotted #000;"/>
 								<div class = "form-inline">
 									<label>Owner Division:</label>
@@ -72,43 +104,32 @@
 									<button type = "button" class = "btn btn-primary" id = "btn_search"><span class = "glyphicon glyphicon-search"></span></button> <button type = "button" id = "reset" class = "btn btn-success"><span class = "glyphicon glyphicon-refresh"><span></button>
 								</div>
 								<br /><br />
-								<div id="printableArea">
-									<div class = "table-responsive" id = "load_data"></div>
-								</div>
+								<div class = "table-responsive" id = "load_data">	
+									
+								</div>	
 							</div>
 						</div>
-                        <!-- end row -->
 
-                        <div class="row">
-							<?php 
-								$sql	=	"select * from `assets` group by category";
-								$result = mysqli_query($db, $sql);
-								while($row=mysqli_fetch_array($result))
-								{
-							?>
-							<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-								<div class="card-box widget-box-two widget-two-success">
-									<h5 style="border:1px solid gray;padding:3px;border-radius:5px;"><?php echo $row['category']; ?></h5>
-									<p>
-										<?php 
-											$category = $row['category'];
-											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category'");
-											$numbCount=mysqli_num_rows($numbQuery);
-										?>
-										<span> <b>Total Qty : <?php echo $numbCount; ?></b></span> | 
-										<?php
-											$stockQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category' AND `assign_status`='Not Assign'");
-											$stockCount=mysqli_num_rows($stockQuery);
-										?>
-										<span> <b>Stock Qty : <?php echo $stockCount; ?></b></span>
-									</p>
-								</div>
-							</div>
-							<?php 
-								}
-							?>
-                        </div>
                         <!-- end row -->
+                        <!-- end row -->
+						 <!-- <div class="row">
+                           <div class="col-lg-12">
+									<center><h4 class="page-title"> Assets List</h4></center>
+									<?php //$results = mysqli_query($db, "SELECT * FROM assets order by id"); ?>
+									<table id="emp_list" class="table table-bordered table-striped">
+										<thead>
+											<tr>
+												<th>SL No</th>
+												<th>Owner</th>
+												<th>Location</th>
+												<th>Category</th>
+												<th>Price</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+							</div>
+						</div> -->
                     </div> <!-- container -->
 
                 </div> <!-- content -->

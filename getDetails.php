@@ -1,5 +1,5 @@
 <?php
-include "connection/connect.php";
+include "connect.php";
 
 $request = $_POST['request'];   // request
 

@@ -6,7 +6,7 @@ global $conn;
 $servername = "localhost";
 $username   = "root";
 $password   = "";
-$dbname     = "autocomplete_textfield_js";
+$dbname     = "admin_assets";
 
 // Create connection
 $conn       = new mysqli($servername, $username, $password, $dbname);
