@@ -32,15 +32,19 @@
 		<li class="has_sub">
 			<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-brightness-auto"></i> <span> Settings</span> <span class="menu-arrow"></span></a>
 			<ul class="list-unstyled">
+			
+			    <li><a href="parentcategories.php">Parent category</a></li>
+			    <li><a href="categories.php">Sub category</a></li>
+				<li><a href="Grade.php">Grade</a></li>
 				<li><a href="company.php">Company</a></li>
 				<li><a href="division.php">Division</a></li>
 				<li><a href="department.php">Department</a></li>
-				<li><a href="designation.php">Designation</a></li>
-				<li><a href="employee.php">Employee</a></li>
-				<li><a href="categories.php">Assets category</a></li>
-				<li><a href="roles.php">User Role</a></li>
+				
+				
+				
+				
 				<li><a href="create_user.php">Add User</a></li>
-				<li><a href="user_list.php">Users List</a></li>
+				
 				<li><a href="data_backup.php">Backup Data</a></li>
 				<li><a href="restore_site.php">Restore Data</a></li>
 			</ul>

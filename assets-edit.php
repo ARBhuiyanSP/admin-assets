@@ -16,7 +16,7 @@ include('add-assets.php');
 			$brand 					= $n['brand'];
 			$model 					= $n['model'];
 			$quality 				= $n['quality'];
-			//$warrenty 				= $n['warrenty'];
+			$warrenty 				= $n['warrenty'];
 			$owner 					= $n['owner'];
 			$dept 					= $n['dept'];
 			$floor 					= $n['floor'];
@@ -24,10 +24,15 @@ include('add-assets.php');
 			$inventory_sl_no 		= $n['inventory_sl_no'];
 			$purchase_date 			= $n['purchase_date'];
 			$ins_date 				= $n['inspaction_date'];
-			//$year_manufacture 		= $n['year_manufacture'];
+			$year_manufacture 		= $n['year_manufacture'];
 			$price 					= $n['price'];
 			$bill_note_req_rlp_no 	= $n['bill_note_req_rlp_no'];
-			//$origin 				= $n['origin'];
+			$origin 				= $n['origin'];
+			
+			$parent_id 				= $n['parent_id'];
+			$grade_id 				= $n['grade_id'];
+			$asset_description 		= $n['asset_description'];
+			
 	}
 	
 	
@@ -85,6 +90,27 @@ include('add-assets.php');
 									<?php endif ?>
 									<input type="hidden" name="id" value="<?php echo $id; ?>">
 									<div class="row">
+									
+									
+									<div class="col-xs-4">
+											<div class="form-group">
+												<label>PARENT</label>
+												<select id="dv" name="parent_id" class="select2 form-control" required>
+													   <option value="<?php echo $parent_id ?>"><?php echo $parent_id ?></option>
+													<?php 
+													$sqld	= "select id,parent_category from parentcategories ORDER BY id ASC";
+													$resultd = mysqli_query($db, $sqld);
+													while($rowd=mysqli_fetch_array($resultd))
+														{
+													?>
+													<option value="<?php echo $rowd['parent_category'] ?>"><?php echo $rowd['parent_category'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										
+										
+										
 										<div class="col-xs-4">
 											<div class="form-group">
 												<label>CATEGORY</label>
@@ -101,6 +127,25 @@ include('add-assets.php');
 												</select>
 											</div>
 										</div>
+										
+											<div class="col-xs-4">
+											<div class="form-group">
+												<label>GRADE</label>
+												<select id="dv" name="grade_id" class="select2 form-control" required>
+										                <option value="<?php echo $grade_id ?>"><?php echo $grade_id ?></option>
+													<?php 
+													$sqld	= "select id,grade from grade ORDER BY id ASC";
+													$resultd = mysqli_query($db, $sqld);
+													while($rowd=mysqli_fetch_array($resultd))
+														{
+													?>
+													<option value="<?php echo $rowd['grade'] ?>"><?php echo $rowd['grade'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										
+										
 										<div class="col-xs-4">
 											<div class="form-group">
 												<label>TYPE</label>
@@ -201,7 +246,7 @@ include('add-assets.php');
 										
 										<div class="col-xs-4">
 											<div class="form-group">
-												<label>PURCHASE DATE</label>
+												<label>PURCHASE DATE </label>
 												<input type="text" name="purchase_date" class="form-control" id="datepicker" value="<?php echo $purchase_date; ?>" autocomplete="off" required>
 											</div>
 										</div>
@@ -229,6 +274,15 @@ include('add-assets.php');
 												<input type="text" name="origin" class="form-control" value="<?php echo $origin; ?>" autocomplete="off">
 											</div>
 										</div>
+										
+										
+											<div class="col-xs-4">
+											<div class="form-group">
+												<label>Asset Description</label>
+												<input type="text" name="asset_description" class="form-control" value="<?php echo $asset_description; ?>" autocomplete="off">
+											</div>
+										</div>
+										
 										<div class="col-xs-12">
 											<div class="form-group">
 												<?php if ($update == true): ?>

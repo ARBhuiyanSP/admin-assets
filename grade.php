@@ -4,12 +4,11 @@ include('add-categories.php');
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
 		$update = true;
-		$record = mysqli_query($db, "SELECT * FROM `categories` WHERE `id`='$id'");
+		$record = mysqli_query($db, "SELECT * FROM `grade` WHERE `id`='$id'");
 
 			$n 		= mysqli_fetch_array($record);
-			$cat_id = $n['cat_id'];
-			$name 	= $n['assets_category'];
-			$parent_category 	= $n['parent_name'];
+			
+			$name 	= $n['grade'];
 	}
 ?>
 
@@ -46,7 +45,7 @@ include('add-categories.php');
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title">Assets Category </h4>
+                                    <h4 class="page-title">grade  </h4>
                                     <div class="clearfix"></div>
                                 </div>
 							</div>
@@ -63,40 +62,14 @@ include('add-categories.php');
 									?>
 								</div>
 								<?php endif ?>
-								<form method="post" action="add-categories.php" >
+								<form method="post" action="add-grade.php" >
 									<input type="hidden" name="id" value="<?php echo $id; ?>">
 									<!-- <div class="form-group">
 										<label>Category ID</label>
 										<input type="text" name="cat_id" class="form-control" value="<?php echo $cat_id; ?>">
 									</div> --->
-									
-									
-									
-									
-									
-									
-									
-										<div class="form-group">
-												<label>Select parent </label>
-												<select id="parent_category" name="parent_category" class="form-control select2">
-													<option> select parent </option>
-													<?php 
-													$sqldg	= "select * from parentcategories";
-													$resultdg = mysqli_query($db, $sqldg);
-													while($rowdg=mysqli_fetch_array($resultdg))
-														{
-													?>
-													<option value="<?php echo $rowdg['parent_category'] ?>" <?php if($parent_category==$rowdg['parent_category']){ echo "selected"; }  ?> ><?php echo $rowdg['parent_category'] ?></option>
-													<?php } ?>
-												</select>
-											</div>
-											
-									
-									
-									
-									
 									<div class="form-group">
-										<label>Category Name</label>
+										<label>grade Name</label>
 										<input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
 									</div>
 									<div class="form-group">
@@ -111,25 +84,22 @@ include('add-categories.php');
                             <div class="col-sm-9">
                                 <div class="card-box table-responsive">
                                     <h4 class="m-t-0 header-title"><b>Category List</b></h4>
-                                    <?php $results = mysqli_query($db, "SELECT * FROM categories order by id"); ?>
+                                    <?php $results = mysqli_query($db, "SELECT * FROM grade order by id"); ?>
 									<table id="datatable-buttons" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-											
-												<th>Parent Name</th>
-												<th>Category Name</th>
+												<th>grade Name</th>
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
 										<?php while ($row = mysqli_fetch_array($results)) { ?>
 											<tr>
-												<td><?php echo $row['parent_name']; ?></td>
-												<td><?php echo $row['assets_category']; ?></td>
+												<td><?php echo $row['grade']; ?></td>
 												<td>
-													<a href="categories.php?edit=<?php echo $row['id']; ?>" class="edit_btn" ><button><i class="fa fa-edit text-success"></i></button></a>
+													<a href="grade.php?edit=<?php echo $row['id']; ?>" class="edit_btn" ><button><i class="fa fa-edit text-success"></i></button></a>
 												
-													<a href="add-categories.php?del=<?php echo $row['id']; ?>" class="del_btn" onclick = "if (! confirm('Sure to delete it?')) return false;"><button><i class="fa fa-trash text-danger"></i></button></a>
+													<a href="add-grade.php?del=<?php echo $row['id']; ?>" class="del_btn" onclick = "if (! confirm('Sure to delete it?')) return false;"><button><i class="fa fa-trash text-danger"></i></button></a>
 												</td>
 											</tr>
 										<?php } ?>

@@ -1,8 +1,8 @@
 <?php
 //fetch.php
 include('../config.php');
-$column = array("id", "user", "owner", "category", "inventory_sl_no", "assign_status");
-$query = "SELECT id, user, owner, category, inventory_sl_no, assign_status FROM assets";
+$column = array("id", "user", "owner", "category","price", "inventory_sl_no", "assign_status");
+$query = "SELECT id, user, owner, category,price, inventory_sl_no, assign_status FROM assets";
 $query .= " WHERE ";
 if(isset($_POST["is_categories"]))
 {
@@ -15,6 +15,7 @@ if(isset($_POST["search"]["value"]))
  $query .= 'OR user LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR owner LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR category LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'OR price LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR inventory_sl_no LIKE "%'.$_POST["search"]["value"].'%" ';
  $query .= 'OR assign_status LIKE "%'.$_POST["search"]["value"].'%") ';
 }
@@ -49,6 +50,7 @@ while($row = mysqli_fetch_array($result))
  $sub_array[] = $row["user"];
  $sub_array[] = $row["owner"];
  $sub_array[] = $row["category"];
+  $sub_array[] = $row["price"];
  $sub_array[] = $row["inventory_sl_no"];
  $sub_array[] = $row["assign_status"];
  $sub_array[] = $actionData;

@@ -49,6 +49,7 @@ table.dataTable tbody th, table.dataTable tbody td {
 														?>
 													</select>
 												</th>
+												<th>price</th>
 												<th>Inventory SL No</th>
 												<th>Assign Status</th>
 												<th>Action</th>

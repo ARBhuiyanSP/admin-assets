@@ -4,6 +4,9 @@
 include "phpqrcode/qrlib.php";
 
 	// initialize variables
+	
+	 // assets-entry.php relation achy $parent_id and $grade   
+	 
 	$id 					= 0;
 	$category_id 			= "";
 	$brand 					= "";
@@ -21,6 +24,15 @@ include "phpqrcode/qrlib.php";
 	$price 					= "";
 	$bill_note_req_rlp_no 	= "";
 	$origin 				= "";
+	
+	$parent_id 				= "";
+	$grade_id 				    = "";
+	$asset_description		= "";
+	
+	
+	
+
+	
 	$update 				= false;
 
 	if (isset($_POST['save'])) {
@@ -81,8 +93,14 @@ include "phpqrcode/qrlib.php";
 		$price 					= $_POST['price'];
 		$bill_note_req_rlp_no 	= $_POST['bill_note_req_rlp_no'];
 		$origin 				= $_POST['origin'];
+		
+		
+		$parent_id 				= $_POST['parent_id'];
+		$grade_id 				= $_POST['grade_id'];
+		$asset_description 		= $_POST['asset_description'];
+		
 
-		mysqli_query($db, "INSERT INTO `assets` (`purchase_date`,`user`,`owner`,`dept`,`floor`,`location`,`category`,`price`,`brand`,`model`,`bill_note_req_rlp_no`,`inventory_sl_no`,`quality`,`warrenty`,`year_manufacture`,`origin`,`assign_status`,`qr_image`) VALUES ('$purchase_date','$user','$owner','$dept','$floor','$location','$category_id','$price','$brand','$model','$bill_note_req_rlp_no','$inventory_sl_no','$quality','$warrenty','$year_manufacture','$origin','Assigned','$pngAbsoluteFilePath')"); 
+	  mysqli_query($db, "INSERT INTO `assets` (`purchase_date`,`user`,`owner`,`dept`,`floor`,`location`,`category`,`price`,`brand`,`model`,`bill_note_req_rlp_no`,`inventory_sl_no`,`quality`,`warrenty`,`year_manufacture`,`origin`,`parent_id`,`grade_id`,`asset_description`,`assign_status`,`qr_image`) VALUES ('$purchase_date','$user','$owner','$dept','$floor','$location','$category_id','$price','$brand','$model','$bill_note_req_rlp_no','$inventory_sl_no','$quality','$warrenty','$year_manufacture','$origin','$parent_id','$grade_id','$asset_description','Assigned','$pngAbsoluteFilePath')"); 
 		$_SESSION['message'] = "<b style='color:green;'>Assets Saved</b>"; 
 		header('location: assets.php');
 	}
@@ -146,8 +164,13 @@ if (isset($_POST['update'])) {
 	$price 					= $_POST['price'];
 	$bill_note_req_rlp_no 	= $_POST['bill_note_req_rlp_no'];
 	//$origin 				= $_POST['origin'];
+	
+	$parent_id 				= $_POST['parent_id'];
+	$grade_id 				= $_POST['grade_id'];
+	$asset_description 		= $_POST['asset_description'];
+	
 
-	mysqli_query($db, "UPDATE `assets` SET `purchase_date`='$purchase_date',`user`='$user',`owner`='$owner',`dept`='$dept',`floor`='$floor',`category`='$category_id',`price`='$price',`brand`='$brand',`model`='$model',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`inventory_sl_no`='$inventory_sl_no',`quality`='$quality', `inspaction_date`='$ins_date',`qr_image`='$pngAbsoluteFilePath' WHERE `id`=$id");
+	mysqli_query($db, "UPDATE `assets` SET `purchase_date`='$purchase_date',`user`='$user',`owner`='$owner',`dept`='$dept',`floor`='$floor',`category`='$category_id',`price`='$price',`brand`='$brand',`model`='$model',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`inventory_sl_no`='$inventory_sl_no',`quality`='$quality',`parent_id`='$parent_id',`grade_id`='$grade_id',`asset_description`='$asset_description', `inspaction_date`='$ins_date',`qr_image`='$pngAbsoluteFilePath' WHERE `id`=$id");
 	$_SESSION['message'] = "<b style='color:green;'>Assets Updated!</b>"; 
 	header('location: assets.php');
 }
