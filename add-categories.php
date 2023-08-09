@@ -2,6 +2,8 @@
 	session_start();
 	require_once("config.php");
 
+
+
 	// initialize variables
 	$cat_id = "";
 	$name = "";
