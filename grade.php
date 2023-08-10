@@ -89,6 +89,7 @@ include('add-categories.php');
 										<thead>
 											<tr>
 												<th>grade Name</th>
+												<th>Narration</th>
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -96,6 +97,7 @@ include('add-categories.php');
 										<?php while ($row = mysqli_fetch_array($results)) { ?>
 											<tr>
 												<td><?php echo $row['grade']; ?></td>
+												<td><?php echo $row['narration']; ?></td>
 												<td>
 													<a href="grade.php?edit=<?php echo $row['id']; ?>" class="edit_btn" ><button><i class="fa fa-edit text-success"></i></button></a>
 												
