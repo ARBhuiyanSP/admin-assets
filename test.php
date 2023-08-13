@@ -1,89 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>How to autocomplete data on multiple fields with jQuery and AJAX</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $(document).on('keydown', '.username', function() {
+                
+                var id = this.id;
+                var splitid = id.split('_');
+                var index = splitid[1];
+
+                $( '#'+id ).autocomplete({
+                    source: function( request, response ) {
+                        $.ajax({
+                            url: "ajaxfile2.php",
+                            type: 'post',
+                            dataType: "json",
+                            data: {
+                                search: request.term,request:1
+                            },
+                            success: function( data ) {
+                                response( data );
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                        $(this).val(ui.item.label); // display the selected text
+                        var userid = ui.item.value; // selected id to input
+
+                        // AJAX
+                        $.ajax({
+                            url: 'ajaxfile2.php',
+                            type: 'post',
+                            data: {userid:userid,request:2},
+                            dataType: 'json',
+                            success:function(response){
+                                
+                                var len = response.length;
+
+                                if(len > 0){
+                                    var id = response[0]['id'];
+                                    var name = response[0]['name'];
+                                    var email = response[0]['email'];
+                                    var age = response[0]['age'];
+                                    var salary = response[0]['salary'];
+
+                                    document.getElementById('name_'+index).value = name;
+                                    document.getElementById('age_'+index).value = age;
+                                    document.getElementById('email_'+index).value = email;
+                                    document.getElementById('salary_'+index).value = salary;
+                                    
+                                }
+                                
+                            }
+                        });
+
+                        return false;
+                    }
+                });
+            });
+            
+            // Add more
+            $('#addmore').click(function(){
+
+                // Get last id 
+                var lastname_id = $('.tr_input input[type=text]:nth-child(1)').last().attr('id');
+                var split_id = lastname_id.split('_');
+
+                // New index
+                var index = Number(split_id[1]) + 1;
+
+                // Create row with input elements
+                var html = "<tr class='tr_input'><td><input type='text' class='username' id='username_"+index+"' placeholder='Enter username'></td><td><input type='text' class='name' id='name_"+index+"' ></td><td><input type='text' class='age' id='age_"+index+"' ></td><td><input type='text' class='email' id='email_"+index+"' ></td><td><input type='text' class='salary' id='salary_"+index+"' ></td></tr>";
+
+                // Append data
+                $('tbody').append(html);
+                
+            });
+        });
+
+    </script>
 </head>
-<style>
-@media print {    
-  .no-print, .no-print * {
-    display: none !important;
-  }
-}
-</style>
-<script>
-function printChecked() {
-    const heading = document.querySelector('table > thead > tr');
-    const items = document.querySelectorAll('table > tbody > tr');
-    for (let i = 0; i < items.length; i++) {
-       const tr = items[i];
-       const input = tr.querySelector('input[type=checkbox]')
-       const isChecked = input.checked
-
-       if (isChecked) {
-          heading.classList.remove('no-print');
-          tr.classList.remove('no-print');
-       }
-    }
-    window.print();
-}
-</script>
 <body>
-
-  
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-		<table class="table">
-			<thead>
-				<tr class="no-print">
-				<th>Sr No</th>   
-				<th>Items</th>   
-				<th>Date</th>   
-				<th>Description</th>   
-				<th>Quantity</th>   
-				<th>No of Pkgs</th>   
-				<th>Pkg Code</th>   
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="no-print">
-					<td><input type="checkbox" id="1" /></td>
-					<td>Mobile</td>
-					<td>1/12/2018</td>
-					<td>Mobile</td>
-					<td>10</td>
-					<td>20</td>
-					<td>12345</td>
-				</tr>
-				<tr class="no-print">
-					<td><input type="checkbox" id="2" /></td>
-					<td>Laptop</td>
-					<td>1/12/2018</td>
-					<td>Mobile</td>
-					<td>10</td>
-					<td>20</td>
-					<td>12345</td>
-				</tr>
-				<tr class="no-print">
-					<td><input type="checkbox" id="3" /></td>
-					<td>Netbook</td>
-					<td>1/12/2018</td>
-					<td>Mobile</td>
-					<td>10</td>
-					<td>20</td>
-					<td>12345</td>
-				</tr>
-			</tbody>
-		</table>
-		<input type="button" class="no-print" onclick='printChecked()' value="Print Selected Items" />
+    <div class="container">
+        
+        <table border='1' style='border-collapse: collapse;'>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Salary</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class='tr_input'>
+                <td><input type='text' class='username' id='username_1' placeholder='Enter username'></td>
+                <td><input type='text' class='name' id='name_1' ></td>
+                <td><input type='text' class='age' id='age_1' ></td>
+                <td><input type='text' class='email' id='email_1' ></td>
+                <td><input type='text' class='salary' id='salary_1' ></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <input type='button' value='Add more' id='addmore'>
     </div>
-  </div>
-</div>
-
 </body>
 </html>
+

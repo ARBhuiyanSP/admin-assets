@@ -41,69 +41,9 @@ include('add-assets.php');
 
 ?>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<script type="text/javascript">
-        $(document).ready(function(){
 
-            $(document).on('keydown', '.employeeid', function() {
-                
-                var id = this.id;
-                var splitid = id.split('_');
-                var index = splitid[1];
 
-                $( '#'+id ).autocomplete({
-                    source: function( request, response ) {
-                        $.ajax({
-                            url: "getEmpDetails.php",
-                            type: 'post',
-                            dataType: "json",
-                            data: {
-                                search: request.term,request:1
-                            },
-                            success: function( data ) {
-                                response( data );
-                            }
-                        });
-                    },
-                    select: function (event, ui) {
-                        $(this).val(ui.item.label); // display the selected text
-                        var userid = ui.item.value; // selected id to input
-
-                        // AJAX
-                        $.ajax({
-                            url: 'getEmpDetails.php',
-                            type: 'post',
-                            data: {userid:userid,request:2},
-                            dataType: 'json',
-                            success:function(response){
-                                
-                                var len = response.length;
-
-                                if(len > 0){
-                                    var id = response[0]['id'];
-                                    var name = response[0]['name'];
-                                    var designation = response[0]['designation'];
-                                    var department = response[0]['department'];
-                                    var division = response[0]['division'];
-                                    var group = response[0]['group'];
-
-                                    document.getElementById('name_'+index).value = name;
-                                    document.getElementById('designation_'+index).value = designation;
-                                    document.getElementById('department_'+index).value = department;
-                                    document.getElementById('division_'+index).value = division;
-                                    document.getElementById('group_'+index).value = group;
-                                }  
-                            }
-                        });
-                        return false;
-                    }
-                });
-            });
-        });
-    </script>
 
 
 
@@ -280,6 +220,65 @@ include('add-assets.php');
 										
 										
 	<!--------------Employee-------------->
+	<script type="text/javascript">
+        $(document).ready(function(){
+
+            $(document).on('keydown', '.employeeid', function() {
+                
+                var id = this.id;
+                var splitid = id.split('_');
+                var index = splitid[1];
+
+                $( '#'+id ).autocomplete({
+                    source: function( request, response ) {
+                        $.ajax({
+                            url: "getEmpDetails.php",
+                            type: 'post',
+                            dataType: "json",
+                            data: {
+                                search: request.term,request:1
+                            },
+                            success: function( data ) {
+                                response( data );
+                            }
+                        });
+                    },
+                    select: function (event, ui) {
+                        $(this).val(ui.item.label); // display the selected text
+                        var userid = ui.item.value; // selected id to input
+
+                        // AJAX
+                        $.ajax({
+                            url: 'getEmpDetails.php',
+                            type: 'post',
+                            data: {userid:userid,request:2},
+                            dataType: 'json',
+                            success:function(response){
+                                
+                                var len = response.length;
+
+                                if(len > 0){
+                                    var id = response[0]['id'];
+                                    var name = response[0]['name'];
+                                    var designation = response[0]['designation'];
+                                    var department = response[0]['department'];
+                                    var division = response[0]['division'];
+                                    var group = response[0]['group'];
+
+                                    document.getElementById('name_'+index).value = name;
+                                    document.getElementById('designation_'+index).value = designation;
+                                    document.getElementById('department_'+index).value = department;
+                                    document.getElementById('division_'+index).value = division;
+                                    document.getElementById('group_'+index).value = group;
+                                }  
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
 					<div class="row">
 						<div class="col-md-2">
                             <div class="form-group">
@@ -487,7 +486,7 @@ include('add-assets.php');
         </script>
 
         <!-- jQuery  -->
-        
+        <script src="assets/js/jquery-3.4.1.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/detect.js"></script>
         <script src="assets/js/fastclick.js"></script>
