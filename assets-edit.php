@@ -175,7 +175,7 @@ include('add-assets.php');
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['cat_id'] ?>" <?php if($rowd['cat_id']==$category_id){echo 'selected';} ?>><?php echo $rowd['assets_category'] ?></option>
+													<option value="<?php echo $rowd['assets_category'] ?>" <?php if($rowd['assets_category']==$category_id){echo 'selected';} ?>><?php echo $rowd['assets_category'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
