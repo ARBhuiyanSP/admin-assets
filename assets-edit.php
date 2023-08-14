@@ -300,7 +300,7 @@ include('add-assets.php');
 						<div class="col-md-2">
                             <div class="form-group">
                                 <label class="field_title">Requested For <span class="reqr"> ***</span></label>
-								<input type='text' name="requested_id" class='form-control employeeid' id='employeeid_1' placeholder='Enter employee id No' >
+								<input type='text' name="requested_id" value="<?php echo $user ?>" class='form-control employeeid' id='employeeid_1' placeholder='Enter employee id No' >
                             </div>
                         </div>
 						<div class="col-md-2">
