@@ -58,7 +58,7 @@
 										<?php } ?>
 									</select>
 									<label>Category</label>
-									<select id="date2" name="date2" class="select2 form-control" required>
+									<select id="date2" name="date2" class="select2 form-control">
 										<option value="">SELECT</option>
 										<?php 
 										$sqld	= "select `category` FROM `assets` GROUP BY `category`";
@@ -81,27 +81,105 @@
 
                         <div class="row">
 							<?php 
-								$sql	=	"select * from `assets` group by category";
+								$sql	=	"select * from `assets` group by parent_id";
 								$result = mysqli_query($db, $sql);
 								while($row=mysqli_fetch_array($result))
 								{
 							?>
-							<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+							<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 								<div class="card-box widget-box-two widget-two-success">
-									<h5 style="border:1px solid gray;padding:3px;border-radius:5px;"><?php echo $row['category']; ?></h5>
-									<p>
-										<?php 
-											$category = $row['category'];
-											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category'");
-											$numbCount=mysqli_num_rows($numbQuery);
-										?>
-										<span> <b>Total Qty : <?php echo $numbCount; ?></b></span> | 
-										<?php
-											$stockQuery = mysqli_query($db, "SELECT * FROM `assets` where `category`='$category' AND `assign_status`='Not Assign'");
-											$stockCount=mysqli_num_rows($stockQuery);
-										?>
-										<span> <b>Stock Qty : <?php echo $stockCount; ?></b></span>
-									</p>
+									<div class="row">
+										<div class="col-md-5">
+										<?php $parent_id = $row['parent_id']; ?>
+											<img class="img-thumbnail" src="images/icon/<?php echo $parent_id; ?>.png" />
+										</div>
+										<div class="col-md-7">
+											<p>
+												<?php 
+													$parent_id = $row['parent_id'];
+													$numbQuery = mysqli_query($db, "SELECT * FROM `assets` where `parent_id`='$parent_id'");
+													$numbCount=mysqli_num_rows($numbQuery);
+												?>
+												<span> <b>Total Qty : <?php echo $numbCount; ?></b></span> </br> 
+												<?php
+													$stockQuery = mysqli_query($db, "SELECT * FROM `assets` where `parent_id`='$parent_id' AND `assign_status`='Not Assign'");
+													$stockCount=mysqli_num_rows($stockQuery);
+												?>
+												<span> <b>Stock Qty : <?php echo $stockCount; ?></b></span>
+											</p>
+										</div>
+									</div>
+								
+									<?php 
+										$parent_id = $row['parent_id'];
+											$sqlpn	=	"select * from `parentcategories`  where id=$parent_id";
+											$resultpn = mysqli_query($db, $sqlpn);
+											$rowpn=mysqli_fetch_array($resultpn);
+									?>
+									<h5 style="border:1px solid gray;padding:3px;border-radius:5px;" data-toggle="modal" data-target="#myModal<?php echo $parent_id; ?>"><?php echo $rowpn['parent_category']; ?> - More Details</h5>
+									  <!-- Modal -->
+									  <div class="modal fade" id="myModal<?php echo $parent_id; ?>" role="dialog">
+										<div class="modal-dialog modal-lg">
+										  <!-- Modal content-->
+										  <div class="modal-content">
+											<div class="modal-header">
+											  <button type="button" class="close" data-dismiss="modal">&times;</button>
+											  <h4 class="modal-title"><?php echo $rowpn['parent_category']; ?> Stock Details</h4>
+											</div>
+											<div class="modal-body">
+												<table id="example" class="display table table-bordered" style="width:100%">
+													<thead>
+														<tr>
+															<th>Date Purchase</th>
+															<th>Owner</th>
+															<th>Category</th>
+															<th>Price</th>
+															<th>Brand</th>
+															<th>Biil/Note/Requ/RLP No</th>
+															<th>Inventory No</th>
+															<th>Quality</th>
+															<th>Insfaction Date</th>
+														</tr>
+													</thead>
+													<tbody>
+														<?php $results = mysqli_query($db, "SELECT * FROM `assets` WHERE `parent_id`='$parent_id'"); 
+															  while ($row = mysqli_fetch_array($results)) { ?>
+														<tr>
+															<td><?php echo $row['purchase_date']; ?></td>
+															<td><?php echo $row['owner']; ?></td>
+															<td><?php echo $row['category']; ?></td>
+															<td><?php echo $row['price']; ?></td>
+															<td><?php echo $row['brand']; ?></td>
+															<td><?php echo $row['bill_note_req_rlp_no']; ?></td>
+															<td><?php echo $row['inventory_sl_no']; ?></td>
+															<td><?php echo $row['quality']; ?></td>
+															<td><?php echo $row['inspaction_date']; ?></td>
+															<!-- <td>
+															<?php
+															/* $product_id=$row['id']; 
+															$sqlpri	= "select * from product_assign where product_id=$product_id";
+															$resultpri = mysqli_query($db, $sqlpri);
+															$rowpri=mysqli_fetch_array($resultpri);
+															echo $rowpri['employee_id']; */
+															?>
+															</td> -->
+														</tr>
+														
+														<?php } ?>
+														
+														
+													</tbody>
+												</table>
+											</div>
+											<div class="modal-footer">
+											  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											</div>
+										  </div>
+										  
+										</div>
+									  </div>
+  
+
 								</div>
 							</div>
 							<?php 
