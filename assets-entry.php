@@ -1,114 +1,33 @@
-<?php include('resource/header.php');
-include('add-assets.php'); 
-
+<?php 
+	include('resource/header.php');
+	include('add-assets.php'); 
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
-		
-	
-		
-		$sqlup	= "SELECT * FROM assets WHERE id=$id";
-		$resultup = mysqli_query($db, $sqlup);
-		$update = true;
-		$n=mysqli_fetch_array($resultup);
-		
-		
-			echo $purchase_date 			= date('m/d/Y');
-			$user 					= $n['user'];
-			$owner 					= $n['owner'];
-			$dept 					= $n['dept'];
-			$floor 					= $n['floor'];
-			$location 					= $n['location'];
-			$category_id 			= $n['category'];
-			$price 					= $n['price'];
-			$brand 					= $n['brand'];
-			$model 					= $n['model'];
-			$bill_note_req_rlp_no 	= $n['bill_note_req_rlp_no'];
-			$inventory_sl_no 		= $n['inventory_sl_no'];
-			$quality 				= $n['quality'];
-			$ins_date 				= $n['inspaction_date'];
-			$warrenty 				= $n['warrenty'];
-			$year_manufacture 		= $n['year_manufacture'];
-			$origin 				= $n['origin'];
-			
-			
-			$parent_id				= $n['parent_id'];
-			$grade_id				= $n['grade'];
+			$sqlup	= "SELECT * FROM assets WHERE id=$id";
+			$resultup = mysqli_query($db, $sqlup);
+			$update = true;
+			$n=mysqli_fetch_array($resultup);
+				echo $purchase_date 	= date('m/d/Y');
+				$user 					= $n['user'];
+				$owner 					= $n['owner'];
+				$dept 					= $n['dept'];
+				$floor 					= $n['floor'];
+				$location 				= $n['location'];
+				$category_id 			= $n['category'];
+				$price 					= $n['price'];
+				$brand 					= $n['brand'];
+				$model 					= $n['model'];
+				$bill_note_req_rlp_no 	= $n['bill_note_req_rlp_no'];
+				$inventory_sl_no 		= $n['inventory_sl_no'];
+				$quality 				= $n['quality'];
+				$ins_date 				= $n['inspaction_date'];
+				$warrenty 				= $n['warrenty'];
+				$year_manufacture 		= $n['year_manufacture'];
+				$origin 				= $n['origin'];
+				$parent_id				= $n['parent_id'];
+				$grade_id				= $n['grade'];
 	}
-	
-	
-	
-	
-
 ?>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-<script type="text/javascript">
-        $(document).ready(function(){
-
-            $(document).on('keydown', '.employeeid', function() {
-                
-                var id = this.id;
-                var splitid = id.split('_');
-                var index = splitid[1];
-
-                $( '#'+id ).autocomplete({
-                    source: function( request, response ) {
-                        $.ajax({
-                            url: "getEmpDetails.php",
-                            type: 'post',
-                            dataType: "json",
-                            data: {
-                                search: request.term,request:1
-                            },
-                            success: function( data ) {
-                                response( data );
-                            }
-                        });
-                    },
-                    select: function (event, ui) {
-                        $(this).val(ui.item.label); // display the selected text
-                        var userid = ui.item.value; // selected id to input
-
-                        // AJAX
-                        $.ajax({
-                            url: 'getEmpDetails.php',
-                            type: 'post',
-                            data: {userid:userid,request:2},
-                            dataType: 'json',
-                            success:function(response){
-                                
-                                var len = response.length;
-
-                                if(len > 0){
-                                    var id = response[0]['id'];
-                                    var name = response[0]['name'];
-                                    var designation = response[0]['designation'];
-                                    var department = response[0]['department'];
-                                    var division = response[0]['division'];
-                                    var group = response[0]['group'];
-
-                                    document.getElementById('name_'+index).value = name;
-                                    document.getElementById('designation_'+index).value = designation;
-                                    document.getElementById('department_'+index).value = department;
-                                    document.getElementById('division_'+index).value = division;
-                                    document.getElementById('group_'+index).value = group;
-                                }  
-                            }
-                        });
-                        return false;
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
-	
-	
 
          <!-- -->
         <link href="plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
@@ -126,7 +45,65 @@ include('add-assets.php');
 
             <!-- Left Sidebar End -->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$(document).on('keydown', '.employeeid', function() {
+					var id = this.id;
+					var splitid = id.split('_');
+					var index = splitid[1];
+					$( '#'+id ).autocomplete({
+						source: function( request, response ) {
+							$.ajax({
+								url: "getEmpDetails.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									search: request.term,request:1
+								},
+								success: function( data ) {
+									response( data );
+								}
+							});
+						},
+						select: function (event, ui) {
+							$(this).val(ui.item.label); // display the selected text
+							var userid = ui.item.value; // selected id to input
 
+							// AJAX
+							$.ajax({
+								url: 'getEmpDetails.php',
+								type: 'post',
+								data: {userid:userid,request:2},
+								dataType: 'json',
+								success:function(response){
+									
+									var len = response.length;
+
+									if(len > 0){
+										var id = response[0]['id'];
+										var name = response[0]['name'];
+										var designation = response[0]['designation'];
+										var department = response[0]['department'];
+										var division = response[0]['division'];
+										var group = response[0]['group'];
+
+										document.getElementById('name_'+index).value = name;
+										document.getElementById('designation_'+index).value = designation;
+										document.getElementById('department_'+index).value = department;
+										document.getElementById('division_'+index).value = division;
+										document.getElementById('group_'+index).value = group;
+									}  
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+		</script>
 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -173,7 +150,7 @@ include('add-assets.php');
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['parent_category'] ?>"><?php echo $rowd['parent_category'] ?></option>
+													<option value="<?php echo $rowd['id'] ?>"><?php echo $rowd['parent_category'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -260,7 +237,7 @@ include('add-assets.php');
 												<input type="text" name="price" class="form-control" value="<?php echo $price; ?>" autocomplete="off">
 											</div>
 										</div>
-										<div class="col-xs-4">
+										<!-- <div class="col-xs-4">
 											<div class="form-group">
 												<label>User</label>
 												<select id="dv" name="user" class="form-control select2">
@@ -275,7 +252,7 @@ include('add-assets.php');
 													<?php } ?>
 												</select>
 											</div>
-										</div>
+										</div> -->
 									</div>
 										
 										
@@ -284,7 +261,7 @@ include('add-assets.php');
 						<div class="col-md-2">
                             <div class="form-group">
                                 <label class="field_title">Requested For <span class="reqr"> ***</span></label>
-								<input type='text' name="requested_id" class='form-control employeeid' id='employeeid_1' placeholder='Enter employee id No' required >
+								<input type='text' name="requested_id" class='form-control employeeid' id='employeeid_1' placeholder='Enter employee id No' >
                             </div>
                         </div>
 						<div class="col-md-2">
@@ -314,7 +291,7 @@ include('add-assets.php');
 						<div class="col-md-2">
                             <div class="form-group">
                                 <label class="field_title">Employee Name</label>
-                                <input type='text' name="request_person" class='form-control name' id='name_1' required >
+                                <input type='text' name="request_person" class='form-control name' id='name_1' >
                             </div>
                         </div>
 					</div>

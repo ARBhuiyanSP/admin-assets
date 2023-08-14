@@ -3,7 +3,10 @@ include('add-assets.php');
 
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
-		$sqlup	= "SELECT * FROM `assets` WHERE `id`='$id'";
+		
+	
+		
+		$sqlup	= "SELECT * FROM assets WHERE id=$id";
 		$resultup = mysqli_query($db, $sqlup);
 		$update = true;
 		$n=mysqli_fetch_array($resultup);
@@ -62,65 +65,7 @@ include('add-assets.php');
 
 
             <!-- Left Sidebar End -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script type="text/javascript">
-			$(document).ready(function(){
-				$(document).on('keydown', '.employeeid', function() {
-					var id = this.id;
-					var splitid = id.split('_');
-					var index = splitid[1];
-					$( '#'+id ).autocomplete({
-						source: function( request, response ) {
-							$.ajax({
-								url: "getEmpDetails.php",
-								type: 'post',
-								dataType: "json",
-								data: {
-									search: request.term,request:1
-								},
-								success: function( data ) {
-									response( data );
-								}
-							});
-						},
-						select: function (event, ui) {
-							$(this).val(ui.item.label); // display the selected text
-							var userid = ui.item.value; // selected id to input
 
-							// AJAX
-							$.ajax({
-								url: 'getEmpDetails.php',
-								type: 'post',
-								data: {userid:userid,request:2},
-								dataType: 'json',
-								success:function(response){
-									
-									var len = response.length;
-
-									if(len > 0){
-										var id = response[0]['id'];
-										var name = response[0]['name'];
-										var designation = response[0]['designation'];
-										var department = response[0]['department'];
-										var division = response[0]['division'];
-										var group = response[0]['group'];
-
-										document.getElementById('name_'+index).value = name;
-										document.getElementById('designation_'+index).value = designation;
-										document.getElementById('department_'+index).value = department;
-										document.getElementById('division_'+index).value = division;
-										document.getElementById('group_'+index).value = group;
-									}  
-								}
-							});
-							return false;
-						}
-					});
-				});
-			});
-		</script>
 
 
             <!-- ============================================================== -->
@@ -151,13 +96,14 @@ include('add-assets.php');
 											<div class="form-group">
 												<label>PARENT</label>
 												<select id="dv" name="parent_id" class="select2 form-control" required>
+													   <option value="<?php echo $parent_id ?>"><?php echo $parent_id ?></option>
 													<?php 
 													$sqld	= "select id,parent_category from parentcategories ORDER BY id ASC";
 													$resultd = mysqli_query($db, $sqld);
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['id'] ?>" <?php if($rowd['id']==$parent_id){echo 'selected';} ?>><?php echo $rowd['parent_category'] ?></option>
+													<option value="<?php echo $rowd['parent_category'] ?>"><?php echo $rowd['parent_category'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -169,13 +115,14 @@ include('add-assets.php');
 											<div class="form-group">
 												<label>CATEGORY</label>
 												<select id="dv" name="category_id" class="select2 form-control" required>
+													<option value="<?php echo $category_id ?>"><?php echo $category_id ?></option>
 													<?php 
 													$sqld	= "select id,cat_id,assets_category from categories ORDER BY id ASC";
 													$resultd = mysqli_query($db, $sqld);
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['cat_id'] ?>" <?php if($rowd['cat_id']==$category_id){echo 'selected';} ?>><?php echo $rowd['assets_category'] ?></option>
+													<option value="<?php echo $rowd['cat_id'] ?>"><?php echo $rowd['assets_category'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -192,7 +139,7 @@ include('add-assets.php');
 													while($rowd=mysqli_fetch_array($resultd))
 														{
 													?>
-													<option value="<?php echo $rowd['grade'] ?>" <?php if($rowd['grade']==$grade_id){echo 'selected';} ?>><?php echo $rowd['grade'] ?></option>
+													<option value="<?php echo $rowd['grade'] ?>"><?php echo $rowd['grade'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -237,13 +184,14 @@ include('add-assets.php');
 											<div class="form-group">
 												<label>DIVISION</label>
 												<select id="dv" name="owner" class="form-control select2">
+													<option value="<?php echo $owner ?>"><?php echo $owner ?></option>
 													<?php 
 													$sqldg	= "select id,division_name from divisions ORDER BY id ASC";
 													$resultdg = mysqli_query($db, $sqldg);
 													while($rowdg=mysqli_fetch_array($resultdg))
 														{
 													?>
-													<option value="<?php echo $rowdg['division_name'] ?>" <?php if($rowdg['division_name']==$owner){echo 'selected';} ?>><?php echo $rowdg['division_name'] ?></option>
+													<option value="<?php echo $rowdg['division_name'] ?>"><?php echo $rowdg['division_name'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -278,7 +226,7 @@ include('add-assets.php');
 												</select>
 											</div>
 										</div>
-										<!-- <div class="col-xs-4">
+										<div class="col-xs-4">
 											<div class="form-group">
 												<label>User</label>
 												<select id="dv" name="user" class="form-control select2">
@@ -293,49 +241,9 @@ include('add-assets.php');
 													<?php } ?>
 												</select>
 											</div>
-										</div> --->
-									</div>	
-											<!--------------Employee-------------->
-					<div class="row">
-						<div class="col-md-2">
-                            <div class="form-group">
-                                <label class="field_title">Requested For <span class="reqr"> ***</span></label>
-								<input type='text' name="requested_id" class='form-control employeeid' id='employeeid_1' placeholder='Enter employee id No' >
-                            </div>
-                        </div>
-						<div class="col-md-2">
-                            <div class="form-group">
-                                <label class="field_title">Division</label>
-                                <input type='text' name="" class='form-control division' id='division_1' readonly >
-                            </div>
-                        </div>
-						<div class="col-md-2">
-                            <div class="form-group">
-                                <label class="field_title">Department</label>
-                                <input type='text' name="" class='form-control department' id='department_1' readonly >
-                            </div>
-                        </div>
-						<div class="col-md-2">
-                            <div class="form-group">
-                                <label class="field_title">Designation</label>
-                                <input type='text' name="" class='form-control designation' id='designation_1' readonly >
-                            </div>
-                        </div>
-						<div class="col-md-2">
-							<div class="form-group">
-								<label class="field_title">Group</label>
-								<input type='text' name="" class='form-control group' id='group_1' readonly >
-							</div>
-						</div>
-						<div class="col-md-2">
-                            <div class="form-group">
-                                <label class="field_title">Employee Name</label>
-                                <input type='text' name="request_person" class='form-control name' id='name_1' >
-                            </div>
-                        </div>
-					</div>
-					<!--------------Employee-------------->
-					<div class="row">
+										</div>
+										
+										
 										<div class="col-xs-4">
 											<div class="form-group">
 												<label>PURCHASE DATE </label>
@@ -446,8 +354,7 @@ include('add-assets.php');
         </script>
 
         <!-- jQuery  -->
-      
-        
+        <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/detect.js"></script>
         <script src="assets/js/fastclick.js"></script>
@@ -472,16 +379,80 @@ include('add-assets.php');
         <script type="text/javascript" src="plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
         <script src="plugins/select2/js/select2.min.js" type="text/javascript"></script>
         <script src="plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>
+        <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
         <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="plugins/autocomplete/jquery.mockjax.js"></script>
+        <script type="text/javascript" src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
+        <script type="text/javascript" src="plugins/autocomplete/countries.js"></script>
+        <script type="text/javascript" src="assets/pages/jquery.autocomplete.init.js"></script>
 
         <script type="text/javascript" src="assets/pages/jquery.form-advanced.init.js"></script>
 
         
+		
+		
+		
+		
+		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables/dataTables.bootstrap.js"></script>
 
+        <script src="plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="plugins/datatables/jszip.min.js"></script>
+        <script src="plugins/datatables/pdfmake.min.js"></script>
+        <script src="plugins/datatables/vfs_fonts.js"></script>
+        <script src="plugins/datatables/buttons.html5.min.js"></script>
+        <script src="plugins/datatables/buttons.print.min.js"></script>
+        <script src="plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="plugins/datatables/dataTables.scroller.min.js"></script>
+        <script src="plugins/datatables/dataTables.colVis.js"></script>
+        <script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
+
+        <!-- init -->
+        <script src="assets/pages/jquery.datatables.init.js"></script>
 
         <!-- App js -->
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#datatable').dataTable();
+                $('#datatable-keytable').DataTable({keys: true});
+                $('#datatable-responsive').DataTable();
+                $('#datatable-colvid').DataTable({
+                    "dom": 'C<"clear">lfrtip',
+                    "colVis": {
+                        "buttonText": "Change columns"
+                    }
+                });
+                $('#datatable-scroller').DataTable({
+                    ajax: "plugins/datatables/json/scroller-demo.json",
+                    deferRender: true,
+                    scrollY: 380,
+                    scrollCollapse: true,
+                    scroller: true
+                });
+                var table = $('#datatable-fixed-header').DataTable({fixedHeader: true});
+                var table = $('#datatable-fixed-col').DataTable({
+                    scrollY: "300px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: false,
+                    fixedColumns: {
+                        leftColumns: 1,
+                        rightColumns: 1
+                    }
+                });
+            });
+            TableManageButtons.init();
+
+        </script>
+
 
     </body>
 </html>
