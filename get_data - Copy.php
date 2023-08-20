@@ -11,14 +11,12 @@ $v_book = $q_book->num_rows;
 if($v_book > 0){
 	
 	?>
-	<b>Total <?php echo $category; ?> Qty : <?php echo $v_book; ?></b>
+	Total Qty : <?php echo $v_book; ?>
 	<table class = "table table-bordered">
 	<thead>
 		<tr>
 			<th style = "width:30%;">Owner</th>
 			<th>Price</th>
-			<th>User</th>
-			<th>Inv SL No</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,12 +24,24 @@ if($v_book > 0){
 	<tr>
 		<td><?php echo $f_book['owner']?></td>
 		<td><?php echo $f_book['price']?></td>
-		<td><?php echo $f_book['user']?></td>
-		<td><?php echo $f_book['inventory_sl_no']?></td>
 	</tr>
 	<?php } ?>
 	</tbody>
 	</table>
+	<button class="btn btn-primary" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="    font-size: 17px;"> Print</i></button>
+							
+							<script>
+							function printDiv(divName) {
+								 var printContents = document.getElementById(divName).innerHTML;
+								 var originalContents = document.body.innerHTML;
+
+								 document.body.innerHTML = printContents;
+
+								 window.print();
+
+								 document.body.innerHTML = originalContents;
+							}
+							</script>
 	<?php
 	
 }else{

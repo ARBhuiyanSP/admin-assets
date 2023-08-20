@@ -22,7 +22,7 @@
 		<li class="has_sub">
 			<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-shredder"></i> <span> Reports</span> <span class="menu-arrow"></span></a>
 			<ul class="list-unstyled">
-				<li><a href="assets-list-report.php">Assets List Report</a></li>
+				<li><a href="assets-report.php">Assets List Report</a></li>
 				<li><a href="assets-history.php">Assets History Report</a></li>
 				<li><a href="damage-list.php">Damage List Report</a></li>
 				<li><a href="inspaction-history.php">Inspaction Report</a></li>

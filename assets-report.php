@@ -20,152 +20,186 @@
                         <div class="row">
 							<div class="col-xs-12">
 								<div class="page-title-box">
-                                    <h4 class="page-title">Assets History Report</h4>
-                                    
-                                    <div class="clearfix"></div>
+                                    <h4 class="page-title"> Division, Category & Gradewise Assets report</h4>
                                 </div>
 							</div>
 						</div>
                         <!-- end row -->
 
-						
+						    
 							<div class="row">
 								<div class="form-horizontal">
-								
 									<div class="form-group">
 									<form action="" method="GET">
-										<div class="col-md-4">
-										   <label class="control-label">Select Asset</label>
-										   <select name="id" class="form-control select2">
-												<option>Select Asset</option>
+										<div class="col-md-2">
+										   <label class="control-label">Division</label>
+										   <select name="division" class="form-control select2" required>
+												<option value="">Select Division</option>
 												<?php
-												$sqlvs="SELECT * FROM `assets`";
-												$resultvs = mysqli_query($db,$sqlvs);
-												while($rowvs = mysqli_fetch_array($resultvs)) {
-													if($_GET['id'] == $rowvs['id']){
+												$sqlFloor="SELECT `owner` FROM `assets` GROUP BY `owner` ";
+												$resultFloor = mysqli_query($db,$sqlFloor);
+												while($rowFloor = mysqli_fetch_array($resultFloor)) {
+													if($_GET['division'] == $rowFloor['owner']){
 													$selected	= 'selected';
 													}else{
 													$selected	= '';
 													}
 												?>
-												<option value="<?php echo $rowvs['id'] ?>" <?php echo $selected; ?>><?php echo $rowvs['category'] ?> || <?php echo $rowvs['inventory_sl_no'] ?></option>
+												<option value="<?php echo $rowFloor['owner']; ?>" <?php echo $selected; ?>><?php echo $rowFloor['owner']; ?></option>
 												<?php } ?>
 											</select>
+										</div>
+										<div class="col-md-2">
+										   <label class="control-label">Parent category</label>
+										   <select id="" name="parent_id" class="select2 form-control">
+												<option value="">Select Parent</option>
+												<?php 
+												$sqld	= "select id,parent_category from parentcategories ORDER BY id ASC";
+												$resultd = mysqli_query($db, $sqld);
+												while($rowd=mysqli_fetch_array($resultd))
+													{
+													if($_GET['parent_id'] == $rowd['id']){
+													$selected	= 'selected';
+													}else{
+													$selected	= '';
+													}
+												?>
+												<option value="<?php echo $rowd['id'] ?>" <?php echo $selected; ?>><?php echo $rowd['parent_category'] ?></option>
+												<?php } ?>
+											</select>
+										</div>
+										
+										<div class="col-md-2">
+												<label>GRADE</label>
+												<select id="" name="grade_id" class="select2 form-control">
+													<option value="">Select Grade</option>
+													<?php 
+													$sqld	= "select id,grade from grade ORDER BY id ASC";
+													$resultd = mysqli_query($db, $sqld);
+													while($rowd=mysqli_fetch_array($resultd))
+														{
+															if($_GET['grade_id'] == $rowd['grade']){
+															$selected	= 'selected';
+															}else{
+															$selected	= '';
+															}
+													?>
+													<option value="<?php echo $rowd['grade'] ?>" <?php echo $selected; ?>><?php echo $rowd['grade'] ?></option>
+													<?php } ?>
+												</select>
 										</div>
 										<div class="col-md-2">
 										   <label class="control-label" style="color:#fff;">.</label>
 										   <button class="form-control btn btn-primary" type="submit" name="submit"><i class=""></i> SEARCH</button>
 										</div>
 									</form>
-										<div class="col-md-2" style="float:right;">
-										   <label class="control-label" style="color:#fff;">.</label>
-										   <button class="form-control btn btn-success" type="button" onclick="location.href='assets.php';"><i class=""></i> Assets List</button>
-										</div>
 									</div>
 								</div>			
 							</div>
-							<?php
-								if(isset($_GET['submit'])){
-									$id = $_GET['id'];
-								
-							?>
-							<div class="row" id="printableArea" style="display:block;">
-								<?php
-								$sql	=	"select * from `assets` where `id`='$id'";
-								$result = mysqli_query($db, $sql);
-								$row=mysqli_fetch_array($result);
-								?>
-								<center>
-									<h1 align="center"><img src="images/logoMenu.png" height="50"></h1>
-									<h2>SAIF POWERTEC LIMITED</h2>
-									<p>72,Mohakhali C/A, (8th Floor),Rupayan Center,Dhaka-1212,bangladesh</p>
-									<h3>Assets History Report</h3>
-									<table class="table" style="width:80%">
-										<tr>
-											<th>Category:</th>
-											<td><?php echo $row['category']; ?>
-											</td>
-											<th>Inventory No:</th>
-											<td><?php echo $row['inventory_sl_no'] ?></td>
-											<th>Brand:</th>
-											<td><?php echo $row['brand'] ?></td>
-											<td rowspan="2"><img src="<?php echo $row['qr_image'] ?>" height="100" /></td>
-											
-										</tr>
-										<tr>
-											<th>Model:</th>
-											<td><?php echo $row['model'] ?></td>
-											<th>Purchase Date:</th>
-											<td><?php echo $row['purchase_date'] ?></td>
-										</tr>
-									</table>
-								<table id="" class="table table-striped table-bordered" style="width:90%">
+						<?php
+							if(isset($_GET['submit'])){
+								$division		= $_GET['division'];	
+								$parent_id		= $_GET['parent_id'];		
+								$grade_id		= $_GET['grade_id'];	
+						?>
+						<div class="row" id="printableArea">
+							<center>
+								<p>
+									<img src="images/logoMenu.png" height="30px;"/><br>
+									<h3>Divisionwise Assets List</h3>
+									<?php 
+										if($_GET['grade_id']!=''){
+											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` WHERE `owner`='$division' AND `parent_id`='$parent_id' AND `grade_id`='$grade_id'");
+										}
+										else if($_GET['parent_id']!=''){
+											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` WHERE `owner`='$division' AND `parent_id`='$parent_id'");
+										}
+										else{
+											$numbQuery = mysqli_query($db, "SELECT * FROM `assets` WHERE `owner`='$division'");
+										}
+										//$numbQuery = mysqli_query($db, "SELECT * FROM `assets` WHERE `owner`='$division' OR (`parent_id`='$parent_id' OR `grade_id`='$grade_id')");
+										//$numbQuery = mysqli_query($db, "SELECT * FROM `assets` WHERE `owner`='$division' AND IF($parent_id !=''){`parent_id`='$parent_id'}");
+										$numbCount=mysqli_num_rows($numbQuery);
+									?>
+									<h5><span style="border:1px solid gray; padding:3px;border-radius:5px;"><?php echo $division; ?> | Total Qty : <?php echo $numbCount; ?></span></h5>
+								</p>
+								<table id="" class="table table-bordered table-striped ">
 									<thead>
 										<tr>
-											<th>Employee ID</th>
-											<th>Employee Name</th>
-											<th>Date From Assign</th>
-											<th>Date To Assign</th>
+											<th>Owner</th>
+											<th>Location</th>
+											<th>Floor</th>
+											<th>Category</th>
+											<th>Brand</th>
+											<th>Model</th>
+											<th>Price</th>
+											<th>Bill/RLP</th>
+											<th>INV SL No</th>
+											<th>MAN Year</th>
+											<th>Inspaction Date</th>
+											<th>Assign Status</th>
+											<th>User</th>
 										</tr>
 									</thead>
 									<tbody>
-									<?php
-										$product_id = $row['id'];
-										$sqlh	=	"SELECT * FROM `product_assign` WHERE `product_id`='$product_id'";
-										$resulth = mysqli_query($db, $sqlh);
-										while ($rowh = mysqli_fetch_array($resulth)) { ?>
-									
-										<tr>
-											<td><?php echo $rowh['employee_id']; ?></td>
+										<?php
+											$totalPrice = 0;
+											if($_GET['grade_id']!=''){
+												$sql = "SELECT * FROM `assets` WHERE `owner`='$division' AND `parent_id`='$parent_id' AND `grade_id`='$grade_id'";
+											}
+											else if($_GET['parent_id']!=''){
+												$sql = "SELECT * FROM `assets` WHERE `owner`='$division' AND `parent_id`='$parent_id'";
+											}
+											else{
+												$sql = "SELECT * FROM `assets` WHERE `owner`='$division'";
+											}
 											
-											<?php
-												$employee_id=$rowh['employee_id'];
-												$sqlemp	=	"SELECT * FROM `inv_employee` WHERE `employeeid`='$employee_id'";
-												$resultemp = mysqli_query($db, $sqlemp);
-												$rowemp = mysqli_fetch_array($resultemp);
-											?>
-											<td><?php echo $rowemp['name']; ?></td>
-											<td><?php 
-											if($rowh['assign_date']){
-												$rDate = strtotime($rowh['assign_date']);
-												$rfDate = date("jS \of F Y",$rDate);
-												echo $rfDate;
-											}else{
-												echo '---';
-											}
-											?>
-											</td>
-											<td><?php 
-											if($rowh['refund_date']){
-												$rfDate = strtotime($rowh['refund_date']);
-												$rffDate = date("jS \of F Y",$rfDate);
-												echo $rffDate;
-											}else{
-												echo '---';
-											}
-											?>
-											</td>
+											//$sql = "SELECT * FROM `assets` WHERE `owner`='$division' OR (`parent_id`='$parent_id' OR `grade_id`='$grade_id')";
+											$result = mysqli_query($db, $sql);
+											while($row=mysqli_fetch_array($result))
+											{
+												$totalPrice += $row['price'];
+										?>
+										<tr>
+											<td><?php echo $row['owner']; ?></td>
+											<td><?php echo $row['location']; ?></td>
+											<td><?php echo $row['floor']; ?></td>
+											<td><?php echo $row['category']; ?></td>
+											<td><?php echo $row['brand']; ?></td>
+											<td><?php echo $row['model']; ?></td>
+											<td><?php echo $row['price']; ?></td>
+											<td><?php echo $row['bill_note_req_rlp_no']; ?></td>
+											<td><?php echo $row['inventory_sl_no']; ?></td>
+											<td><?php echo $row['year_manufacture']; ?></td>
+											<td><?php echo $row['inspaction_date']; ?></td>
+											<td><?php echo $row['assign_status']; ?></td>
+											<td><?php echo $row['user'] .'|'. $row['user_name']; ?></td>
 										</tr>
 										<?php } ?>
+										<tr>
+											<td>Total</td>
+											<td colspan="5"></td>
+											<td><?php echo $totalPrice; ?></td>
+											<td colspan="6"></td>
+										</tr>
 									</tbody>
 								</table>
-								</center>
-							</div>
-								
-							<center><button class="btn btn-default" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="font-size: 17px;"> Print</i></button></center>					
-							<script>
-							function printDiv(divName) {
-								 var printContents = document.getElementById(divName).innerHTML;
-								 var originalContents = document.body.innerHTML;
+							</center>
+						</div>
+						<center><button class="btn btn-default" onclick="printDiv('printableArea')"><i class="fa fa-print" aria-hidden="true" style="    font-size: 17px;"> Print</i></button></center>
+						<script>
+						function printDiv(divName) {
+							 var printContents = document.getElementById(divName).innerHTML;
+							 var originalContents = document.body.innerHTML;
 
-								 document.body.innerHTML = printContents;
+							 document.body.innerHTML = printContents;
 
-								 window.print();
+							 window.print();
 
-								 document.body.innerHTML = originalContents;
-							}
-							</script>
-							<?php } ?>
+							 document.body.innerHTML = originalContents;
+						}
+						</script>
+						<?php } ?>
 					</div> <!-- container -->
                 </div> <!-- content -->
                 <footer class="footer text-right">

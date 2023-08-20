@@ -40,7 +40,44 @@
                                 </div>
 							</div>
 						</div>
-                        
+                        <!-- end row -->
+						<div class = "row">
+							<div class = "col-md-12">
+								<hr style = "border-top:1px dotted #000;"/>
+								<div class = "form-inline">
+									<label>Owner Division:</label>
+									<select id="owner" name="owner" class="form-control select2">
+										<option value="">Select</option>
+										<?php 
+										$sqldg	= "select `owner` FROM `assets` GROUP BY `owner`";
+										$resultdg = mysqli_query($db, $sqldg);
+										while($rowdg=mysqli_fetch_array($resultdg))
+											{
+										?>
+										<option value="<?php echo $rowdg['owner'] ?>"><?php echo $rowdg['owner'] ?></option>
+										<?php } ?>
+									</select>
+									<label>Category</label>
+									<select id="category" name="category" class="select2 form-control">
+										<option value="">SELECT</option>
+										<?php 
+										$sqld	= "select `category` FROM `assets` GROUP BY `category`";
+										$resultd = mysqli_query($db, $sqld);
+										while($rowd=mysqli_fetch_array($resultd))
+											{
+										?>
+										<option value="<?php echo $rowd['category'] ?>"><?php echo $rowd['category'] ?></option>
+										<?php } ?>
+									</select>
+									<button type = "button" class = "btn btn-primary" id = "btn_search"><span class = "glyphicon glyphicon-search"></span></button> <button type = "button" id = "reset" class = "btn btn-success"><span class = "glyphicon glyphicon-refresh"><span></button>
+								</div>
+								<br /><br />
+								<div id="printableArea">
+									<div class = "table-responsive" id = "load_data"></div>
+								</div>
+							</div>
+						</div>
+                        <!-- end row -->
 
                         <div class="row">
 							<?php 

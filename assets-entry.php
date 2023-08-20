@@ -123,7 +123,7 @@
 							
                             <div class="col-sm-12 card-box">
 								<button class="btn btn-success btn-sm" onclick="location.href='assets.php';" > Asset List</button>
-								<form method="post" action="add-assets.php" style="padding:15px;border-radius:5px;min-height:619px;">
+								<form method="post" action="add-assets.php" style="padding:15px;border-radius:5px;min-height:619px;" enctype="multipart/form-data">
 									<center><h5 style="background-color:gray;color:#ffffff;padding:5px;border-radius:5px;">ASSETS PURCHASE ENTRY FORM</h5></center>
 									<?php if (isset($_SESSION['message'])): ?>
 									<div class="msg">
@@ -387,8 +387,30 @@
 												<input type="text" name="asset_description" class="form-control" value="<?php echo $asset_description; ?>" autocomplete="off">
 											</div>
 										</div>
-										
-										
+									</div>
+									<div class="row" style="">
+										<div class="col-xs-6">
+											<div class="form-group">
+												<input type="file" accept="image/*"  name="file" id="picture">
+												<p id="error1" style="display:none; color:#FF0000;">
+													Invalid Image Format! Image Format Must Be JPG, JPEG, PNG or GIF.
+												</p>
+												<p id="error2" style="display:none; color:#FF0000;">
+													Maximum File Size Limit is 500KB.
+												</p>
+												<script>
+													var loadFile = function (event) {
+														var output = document.getElementById('output');
+														output.src = URL.createObjectURL(event.target.files[0]);
+														output.onload = function () {
+															URL.revokeObjectURL(output.src) // free memory
+														}
+													};
+												</script>
+											</div>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-xs-12">
 											<div class="form-group">
 												<?php if ($update == true): ?>
@@ -500,7 +522,36 @@
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
 
+<script>
+    $('input[type="submit"]').prop("disabled", false);
+    var a = 0;
+//binds to onchange event of your input field
+    $('#picture').bind('change', function () {
+        if ($('input:submit').attr('disabled', false)) {
+            $('input:submit').attr('disabled', true);
+        }
+        var ext = $('#picture').val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+            $('#error1').slideDown("slow");
+            $('#error2').slideUp("slow");
+            a = 0;
+        } else {
+            var picsize = (this.files[0].size);
+            if (picsize > 500000) {
+                $('#error2').slideDown("slow");
+                a = 0;
+            } else {
+                a = 1;
+                $('#error2').slideUp("slow");
+            }
+            $('#error1').slideUp("slow");
+            if (a == 1) {
+                $('input:submit').attr('disabled', false);
+            }
+        }
+    });
 
+</script>
 
 
     </body>

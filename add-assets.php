@@ -114,8 +114,17 @@ include "phpqrcode/qrlib.php";
 		{
 			$assign_status 		= 'Not Assigned';
 		}
+		
+		
+		
+		if (is_uploaded_file($_FILES['file']['tmp_name'])) 
+		{
+			$temp_file=$_FILES['file']['tmp_name'];
+			$asset_image=time().$_FILES['file']['name'];
+			$q = move_uploaded_file($temp_file,"images/".$asset_image);
+		} 
 
-	  mysqli_query($db, "INSERT INTO `assets` (`purchase_date`,`user`,`user_name`,`owner`,`dept`,`floor`,`location`,`category`,`price`,`brand`,`model`,`bill_note_req_rlp_no`,`inventory_sl_no`,`quality`,`warrenty`,`year_manufacture`,`origin`,`parent_id`,`grade_id`,`asset_description`,`assign_status`,`qr_image`) VALUES ('$purchase_date','$user','$user_name','$owner','$dept','$floor','$location','$category_id','$price','$brand','$model','$bill_note_req_rlp_no','$inventory_sl_no','$quality','$warrenty','$year_manufacture','$origin','$parent_id','$grade_id','$asset_description','$assign_status','$pngAbsoluteFilePath')");
+	  mysqli_query($db, "INSERT INTO `assets` (`purchase_date`,`user`,`user_name`,`owner`,`dept`,`floor`,`location`,`category`,`price`,`brand`,`model`,`bill_note_req_rlp_no`,`inventory_sl_no`,`quality`,`warrenty`,`year_manufacture`,`origin`,`parent_id`,`grade_id`,`asset_description`,`assign_status`,`qr_image`,`asset_image`) VALUES ('$purchase_date','$user','$user_name','$owner','$dept','$floor','$location','$category_id','$price','$brand','$model','$bill_note_req_rlp_no','$inventory_sl_no','$quality','$warrenty','$year_manufacture','$origin','$parent_id','$grade_id','$asset_description','$assign_status','$pngAbsoluteFilePath','$asset_image')");
 	 
 	 $lastinsertedId =  mysqli_insert_id($db);
 
@@ -223,9 +232,22 @@ if (isset($_POST['update'])) {
 		{
 			$assign_status 		= 'Not Assigned';
 		}
+		
+		
+		
+		if (is_uploaded_file($_FILES['sn_prt_image']['tmp_name'])) 
+			{
+				$temp_file=$_FILES['sn_prt_image']['tmp_name'];
+				$asset_image=time().$_FILES['sn_prt_image']['name'];
+				$q = move_uploaded_file($temp_file,"images/".$asset_image);
+			}
+			else
+			{
+			 $asset_image = $_POST["sn_old_image"];
+			}
 	
 
-	mysqli_query($db, "UPDATE `assets` SET `purchase_date`='$purchase_date',`user`='$user',`owner`='$owner',`dept`='$dept',`floor`='$floor',`category`='$category_id',`price`='$price',`brand`='$brand',`model`='$model',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`inventory_sl_no`='$inventory_sl_no',`quality`='$quality',`parent_id`='$parent_id',`grade_id`='$grade_id',`asset_description`='$asset_description', `inspaction_date`='$ins_date',`qr_image`='$pngAbsoluteFilePath' WHERE `id`=$id");
+	mysqli_query($db, "UPDATE `assets` SET `purchase_date`='$purchase_date',`user`='$user',`user_name`='$user_name',`owner`='$owner',`dept`='$dept',`floor`='$floor',`category`='$category_id',`price`='$price',`brand`='$brand',`model`='$model',`bill_note_req_rlp_no`='$bill_note_req_rlp_no',`inventory_sl_no`='$inventory_sl_no',`quality`='$quality',`parent_id`='$parent_id',`grade_id`='$grade_id',`asset_description`='$asset_description', `inspaction_date`='$ins_date',`warrenty`='$warrenty',`year_manufacture`='$year_manufacture',`origin`='$origin',`assign_status`='$assign_status',`qr_image`='$pngAbsoluteFilePath',`asset_image`='$asset_image' WHERE `id`=$id");
 	
 	if($_POST['requested_id']!=''){
 			$product_id 	= $id;

@@ -18,6 +18,7 @@ include('add-assets.php');
 			$dept 					= $n['dept'];
 			$floor 					= $n['floor'];
 			$user 					= $n['user'];
+			$user_name 					= $n['user_name'];
 			$inventory_sl_no 		= $n['inventory_sl_no'];
 			$purchase_date 			= $n['purchase_date'];
 			$ins_date 				= $n['inspaction_date'];
@@ -29,6 +30,7 @@ include('add-assets.php');
 			$parent_id 				= $n['parent_id'];
 			$grade_id 				= $n['grade_id'];
 			$asset_description 		= $n['asset_description'];
+			$asset_image 		= $n['asset_image'];
 			
 	}
 	
@@ -133,7 +135,7 @@ include('add-assets.php');
                         <div class="row">
                             <div class="col-sm-12 card-box">
 								<button class="btn btn-success btn-sm" onclick="location.href='assets.php';" > Asset List</button>
-								<form method="post" action="add-assets.php" style="padding:15px;border-radius:5px;min-height:619px;">
+								<form method="post" action="add-assets.php" style="padding:15px;border-radius:5px;min-height:619px;" enctype="multipart/form-data">
 									<center><h5 style="background-color:gray;color:#ffffff;padding:5px;border-radius:5px;">ASSETS PURCHASE ENTRY FORM</h5></center>
 									<?php if (isset($_SESSION['message'])): ?>
 									<div class="msg">
@@ -233,51 +235,6 @@ include('add-assets.php');
 												<input type="text" name="price" class="form-control" value="<?php echo $price; ?>" autocomplete="off">
 											</div>
 										</div>
-										<div class="col-xs-4">
-											<div class="form-group">
-												<label>DIVISION</label>
-												<select id="dv" name="owner" class="form-control select2">
-													<?php 
-													$sqldg	= "select id,division_name from divisions ORDER BY id ASC";
-													$resultdg = mysqli_query($db, $sqldg);
-													while($rowdg=mysqli_fetch_array($resultdg))
-														{
-													?>
-													<option value="<?php echo $rowdg['division_name'] ?>" <?php if($rowdg['division_name']==$owner){echo 'selected';} ?>><?php echo $rowdg['division_name'] ?></option>
-													<?php } ?>
-												</select>
-											</div>
-										</div>
-										<div class="col-xs-4">
-											<div class="form-group">
-												<label>DEPARTMENT</label>
-												<select id="dv" name="dept" class="form-control select2">
-													<option value="<?php echo $dept ?>"><?php echo $dept ?></option>
-													<?php 
-													$sqldpt	= "select id,dept_name from departments ORDER BY id ASC";
-													$resultdpt = mysqli_query($db, $sqldpt);
-													while($rowdpt=mysqli_fetch_array($resultdpt))
-														{
-													?>
-													<option value="<?php echo $rowdpt['dept_name'] ?>"><?php echo $rowdpt['dept_name'] ?></option>
-													<?php } ?>
-												</select>
-											</div>
-										</div>
-										<div class="col-xs-4">
-											<div class="form-group">
-												<label>Floor</label>
-												<select id="dv" name="floor" class="form-control select2">
-													<option value="<?php echo $floor ?>"><?php echo $floor ?></option>
-													<option value="KT-14">KT-14</option>
-													<option value="KT-13">KT-13</option>
-													<option value="KT-12">KT-12</option>
-													<option value="KT-05">KT-05</option>
-													<option value="KT-03">KT-03</option>
-													<option value="KT-02">KT-02</option>
-												</select>
-											</div>
-										</div>
 										<!-- <div class="col-xs-4">
 											<div class="form-group">
 												<label>User</label>
@@ -330,16 +287,65 @@ include('add-assets.php');
 						<div class="col-md-2">
                             <div class="form-group">
                                 <label class="field_title">Employee Name</label>
-                                <input type='text' name="request_person" class='form-control name' id='name_1' >
+                                <input type='text' name="request_person" value="<?php echo $user_name ?>" class='form-control name' id='name_1' >
                             </div>
                         </div>
+					</div>
+					<!--------------Employee-------------->
+					<div class="row">
+					
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label>DIVISION</label>
+												<select id="dv" name="owner" class="form-control select2">
+													<?php 
+													$sqldg	= "select id,division_name from divisions ORDER BY id ASC";
+													$resultdg = mysqli_query($db, $sqldg);
+													while($rowdg=mysqli_fetch_array($resultdg))
+														{
+													?>
+													<option value="<?php echo $rowdg['division_name'] ?>" <?php if($rowdg['division_name']==$owner){echo 'selected';} ?>><?php echo $rowdg['division_name'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label>DEPARTMENT</label>
+												<select id="dv" name="dept" class="form-control select2">
+													<option value="<?php echo $dept ?>"><?php echo $dept ?></option>
+													<?php 
+													$sqldpt	= "select id,dept_name from departments ORDER BY id ASC";
+													$resultdpt = mysqli_query($db, $sqldpt);
+													while($rowdpt=mysqli_fetch_array($resultdpt))
+														{
+													?>
+													<option value="<?php echo $rowdpt['dept_name'] ?>"><?php echo $rowdpt['dept_name'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label>Floor</label>
+												<select id="dv" name="floor" class="form-control select2">
+													<option value="<?php echo $floor ?>"><?php echo $floor ?></option>
+													<option value="KT-14">KT-14</option>
+													<option value="KT-13">KT-13</option>
+													<option value="KT-12">KT-12</option>
+													<option value="KT-05">KT-05</option>
+													<option value="KT-03">KT-03</option>
+													<option value="KT-02">KT-02</option>
+												</select>
+											</div>
+										</div>
 					</div>
 					<!--------------Employee-------------->
 					<div class="row">
 										<div class="col-xs-4">
 											<div class="form-group">
 												<label>PURCHASE DATE </label>
-												<input type="text" name="purchase_date" class="form-control" id="datepicker" value="<?php echo $purchase_date; ?>" autocomplete="off" required>
+												<input type="date" name="purchase_date" class="form-control" id="" value="<?php echo $purchase_date; ?>" autocomplete="off" required>
 											</div>
 										</div>
 										<div class="col-xs-4">
@@ -374,7 +380,28 @@ include('add-assets.php');
 												<input type="text" name="asset_description" class="form-control" value="<?php echo $asset_description; ?>" autocomplete="off">
 											</div>
 										</div>
+									</div>
+									<div class="row" style="">
+										<div class="col-xs-6">
+											<div class="form-group">
+												<input type="hidden" name="sn_old_image" value="<?php echo $asset_image; ?>"  /> 
+												<input type="file" accept="image/*" name="sn_prt_image" onchange="loadFile(event)">
+												<p style="color:red;">*** Select an image file like .jpg or .png</p>
+												<script>
+												  var loadFile = function(event) {
+													var output = document.getElementById('output');
+													output.src = URL.createObjectURL(event.target.files[0]);
+													output.onload = function() {
+													  URL.revokeObjectURL(output.src) // free memory
+													}
+												  };
+												  
+												</script>
+											</div>
+										</div>
 										
+									</div>
+									<div class="row">
 										<div class="col-xs-12">
 											<div class="form-group">
 												<?php if ($update == true): ?>

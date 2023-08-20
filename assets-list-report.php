@@ -27,7 +27,7 @@
 										</a>
 									</div>
 									<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<a href="divisionwise_assets_list.php">
+										<a href="assets-report.php">
 											<div class="card-box widget-box-two widget-two-success" style="padding:5px;font-size:20px;">
 											Divisionwise Assets List
 											</div>
