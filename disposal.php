@@ -1,7 +1,9 @@
 <?php include('resource/header.php');
 if(isset($_POST['submit'])){
 	$id = $_POST['id'];
-} 
+} else{
+	$id = $_GET['id'];
+}
 ?>
             <!-- Left Sidebar End -->
 			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

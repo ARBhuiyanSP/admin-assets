@@ -32,7 +32,7 @@
 							<div class="row">
 							<?php
 							$id = $_GET['id'];
-							$sql	=	"select * from `assets` where `inventory_sl_no`='$id'";
+							$sql	=	"select * from `assets` where `id`='$id'";
 							$result = mysqli_query($db, $sql);
 							$row=mysqli_fetch_array($result);
 							?>
@@ -75,7 +75,7 @@
 							<div class="col-xs-2">
 								<div class="form-group">
 									<?php 
-										$product_id= $row['inventory_sl_no'];
+										$product_id= $row['id'];
 										$sql2	= "SELECT * FROM `product_assign` WHERE `product_id`='$product_id' ORDER BY `id` DESC LIMIT 1 ;";
 										$result2 = mysqli_query($db, $sql2);
 										$row2=mysqli_fetch_array($result2);
@@ -83,11 +83,11 @@
 									<label>Assign/Issue To</label>
 									<?php 
 									$employee_id=$row2['employee_id'];
-									$sql3	= "SELECT * FROM `employees` WHERE `employee_id`='$employee_id' ;";
+									$sql3	= "SELECT * FROM `inv_employee` WHERE `employeeid`='$employee_id' ;";
 									$result3 = mysqli_query($db, $sql3);
 									$row3=mysqli_fetch_array($result3);
 									?>
-									<input name="employee_id" type="text" class="form-control" id="" value="<?php echo $row3['employee_name'] ?>" readonly />
+									<input name="employee_id" type="text" class="form-control" id="" value="<?php echo $row3['name'] ?>" readonly />
 								</div>
 							</div>
 							<div class="col-xs-2">

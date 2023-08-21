@@ -1,76 +1,92 @@
-<?php include('resource/header.php');
-?>
-<link href="plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<?php include('resource/header.php'); ?>
+            <!-- Left Sidebar End -->
+<!-- DataTables -->
+<link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
-<!-- Plugins css-->
-        <link href="plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet" />
-        <link href="plugins/multiselect/css/multi-select.css"  rel="stylesheet" type="text/css" />
-        <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
-        <link href="plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
-
-<!-- ============================================================== -->
+<style>
+table.dataTable tbody th, table.dataTable tbody td {
+	padding: 3px 10px;
+}
+</style>
+            <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->
             <div class="content-page">
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
-
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
-                                    <h4 class="page-title">Disposal Entry : Product Selection</h4>
-                                    
-                                    <div class="clearfix"></div>
-                                </div>
+                           <div class="col-lg-12">
+                                <div class="container">
+									<h3>Assets List <button class="btn btn-success btn-sm"> - Assets Disposal</button></h3>
+									<div class="clearfix"></div>
+									<table id="receive_data_list" class="table table-bordered table-striped">
+										<thead>
+											<tr>
+												<th>User</th>
+												<th>
+													<select name="owner" id="owners" class="form-control">
+														<option value="">Owner / Division</option>
+														<?php 
+														$query = "SELECT * FROM assets GROUP BY owner ORDER BY owner ASC";
+														$result = mysqli_query($db, $query);
+														while($row = mysqli_fetch_array($result))
+														{
+															echo '<option value="'.$row["owner"].'">'.$row["owner"].'</option>';
+														}
+														?>
+													</select>
+												</th>
+												<th>Category</th>
+												<th>Inventory SL No</th>
+												<th>Assign Status</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 						</div>
-                        <!-- end row -->
+                    </div> <!-- container -->
+				</div> <!-- container -->
+					
 
-						<form action="disposal.php" method="post">
-							<div class="row">
-								<div class="form-horizontal">
-								
-									<div class="form-group">
-										<label class="col-md-offset-3 col-md-2 control-label">Select Product For Disposal Entry</label>
-										<div class="col-md-4">
-										   <select name="id" class="form-control select2">
-												<option>Select Product</option>
-												<?php
-												$sqlvs="SELECT * FROM `assets` where `status` = 'damaged'";
-												$resultvs = mysqli_query($db,$sqlvs);
-												while($rowvs = mysqli_fetch_array($resultvs)) {
-												?>
-												<option value="<?php echo $rowvs['id'] ?>"><?php echo $rowvs['id'] ?> || <?php echo $rowvs['category'] ?> || <?php echo $rowvs['inventory_sl_no'] ?></option>
-												<?php } ?>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-									  <div class="col-md-offset-5">
-										  <button class="btn btn-primary" type="submit" name="submit"><i class=""></i> Next</button>
-								<input type="button" name="back" id="back" class="btn btn-info" onclick="location.href = 'disposal-list.php';" value="Back To Disposal List" />
-									   </div>
-									</div>
-								</div>			
-							</div>
-						</form>
-					</div> <!-- container -->
                 </div> <!-- content -->
+
                 <footer class="footer text-right">
-                    2018 - <?php echo date('Y'); ?> © <a href="" target="blank">Saif Powertec</a>
+                   2018 - <?php echo date('Y'); ?> © <a href="" target="blank">Saif Powertec</a>
                 </footer>
+
             </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+
         </div>
+        <!-- END wrapper -->
 
 
 
-		<script>
+        <script>
             var resizefunc = [];
         </script>
 
+
+		
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
@@ -81,10 +97,9 @@
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/jquery.scrollTo.min.js"></script>
         <script src="plugins/switchery/switchery.min.js"></script>
-
-        <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+		
+		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="plugins/datatables/dataTables.bootstrap.js"></script>
-
         <script src="plugins/datatables/dataTables.buttons.min.js"></script>
         <script src="plugins/datatables/buttons.bootstrap.min.js"></script>
         <script src="plugins/datatables/jszip.min.js"></script>
@@ -99,81 +114,75 @@
         <script src="plugins/datatables/dataTables.scroller.min.js"></script>
         <script src="plugins/datatables/dataTables.colVis.js"></script>
         <script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
+        <!-- Counter js  -->
+        <script src="plugins/waypoints/jquery.waypoints.min.js"></script>
+        <script src="plugins/counterup/jquery.counterup.min.js"></script>
 
-        <!-- init -->
-        <script src="assets/pages/jquery.datatables.init.js"></script>
-		
-		<script src="plugins/moment/moment.js"></script>
-     	<script src="plugins/timepicker/bootstrap-timepicker.js"></script>
-     	<script src="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-     	<script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-     	<script src="plugins/clockpicker/js/bootstrap-clockpicker.min.js"></script>
-     	<script src="plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <!--Morris Chart-->
+		<script src="plugins/morris/morris.min.js"></script>
+		<script src="plugins/raphael/raphael-min.js"></script>
 
-		
-		
-		
-		<script src="plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
-        <script type="text/javascript" src="plugins/multiselect/js/jquery.multi-select.js"></script>
-        <script type="text/javascript" src="plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
-        <script src="plugins/select2/js/select2.min.js" type="text/javascript"></script>
-        <script src="plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-        <script src="plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js" type="text/javascript"></script>
-        <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
-        <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
+        <!-- Dashboard init -->
+        <script src="assets/pages/jquery.dashboard.js"></script>
 
-        <script type="text/javascript" src="plugins/autocomplete/jquery.mockjax.js"></script>
-        <script type="text/javascript" src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
-        <script type="text/javascript" src="plugins/autocomplete/countries.js"></script>
-        <script type="text/javascript" src="assets/pages/jquery.autocomplete.init.js"></script>
-
-        <script type="text/javascript" src="assets/pages/jquery.form-advanced.init.js"></script>
-		
-		
-		
         <!-- App js -->
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
+		
+		<script src="assets/js/tabledit.min.js"></script>
+        	<script type="text/javascript" language="javascript" >
+$(document).ready(function(){
+ 
+ load_receive_data();
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#datatable').dataTable();
-                $('#datatable-keytable').DataTable({keys: true});
-                $('#datatable-responsive').DataTable();
-                $('#datatable-colvid').DataTable({
-                    "dom": 'C<"clear">lfrtip',
-                    "colVis": {
-                        "buttonText": "Change columns"
-                    }
-                });
-                $('#datatable-scroller').DataTable({
-                    ajax: "plugins/datatables/json/scroller-demo.json",
-                    deferRender: true,
-                    scrollY: 380,
-                    scrollCollapse: true,
-                    scroller: true
-                });
-                var table = $('#datatable-fixed-header').DataTable({fixedHeader: true});
-                var table = $('#datatable-fixed-col').DataTable({
-                    scrollY: "300px",
-                    scrollX: true,
-                    scrollCollapse: true,
-                    paging: false,
-                    fixedColumns: {
-                        leftColumns: 1,
-                        rightColumns: 1
-                    }
-                });
-            });
-            TableManageButtons.init();
+ function load_receive_data(is_owners)
+ {
+  var dataTable = $('#receive_data_list').DataTable({
+   "processing":true,
+   "serverSide":true,
+   "order":[],
+   "ajax":{
+    url:"fetch/fetch_disposal_table.php",
+    type:"POST",
+    data:{is_owners:is_owners}
+   },
+   "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+            if ( aData[4] == "Assigned" )
+            {
+				$('td', nRow).css('background-color', '#b01a33');
+				$('td', nRow).css('color', '#fff');
+            }else{
+				$('td', nRow).css('background-color', '#218a5c');
+				$('td', nRow).css('color', '#fff');
+			}
+        },
+   "columnDefs":[
+    {
+     "targets":[2],
+     "orderable":false,
+    },
+   ],
+  });
+ }
 
-        </script>
-		<script type="text/javascript" src="plugins/autocomplete/jquery.mockjax.js"></script>
-        <script type="text/javascript" src="plugins/autocomplete/jquery.autocomplete.min.js"></script>
-        <script type="text/javascript" src="plugins/autocomplete/countries.js"></script>
-        <script type="text/javascript" src="assets/pages/jquery.autocomplete.init.js"></script>
-		<script src="assets/pages/jquery.form-pickers.init.js"></script>
+ $(document).on('change', '#owners', function(){
+  var owners = $(this).val();
+  $('#receive_data_list').DataTable().destroy();
+  if(owners != '')
+  {
+   load_receive_data(owners);
+  }
+  else
+  {
+   load_receive_data();
+  }
+ });
+});
+</script>
 
+		
+		
+	
 
     </body>
 </html>

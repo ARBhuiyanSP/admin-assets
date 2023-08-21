@@ -4,9 +4,9 @@ include('../config.php');
 $column = array("id", "user", "owner", "category","price", "inventory_sl_no", "assign_status");
 $query = "SELECT id, user, owner, category,price, inventory_sl_no, assign_status FROM assets";
 $query .= " WHERE ";
-if(isset($_POST["is_categories"]))
+if(isset($_POST["is_owners"]))
 {
- $query .= "category = '".$_POST["is_categories"]."' AND ";
+ $query .= "owner = '".$_POST["is_owners"]."' AND ";
 }
 
 if(isset($_POST["search"]["value"]))
@@ -46,11 +46,11 @@ while($row = mysqli_fetch_array($result))
 {
 	$actionData     =   get_receive_list_action_data($row);
  $sub_array = array();
- $sub_array[] = $row["id"];
+ //$sub_array[] = $row["id"];
  $sub_array[] = $row["user"];
  $sub_array[] = $row["owner"];
  $sub_array[] = $row["category"];
-  $sub_array[] = $row["price"];
+  //$sub_array[] = $row["price"];
  $sub_array[] = $row["inventory_sl_no"];
  $sub_array[] = $row["assign_status"];
  $sub_array[] = $actionData;
@@ -60,33 +60,34 @@ while($row = mysqli_fetch_array($result))
 
 function get_receive_list_action_data($row){
 	
-    $qr_url	= 'qrprintview.php?id='.$row["id"];
+   /*  $qr_url	= 'qrprintview.php?id='.$row["id"];
     $edit_url	= 'assets-edit.php?edit='.$row["id"];
     $view_url 	= 'assets-view.php?id='.$row["id"];
     $assign_url = 'assign.php?id='.$row["id"];
 	
 	$transfer_url = 'transfer.php?id='.$row["id"];
-    $refund_url = 'refund.php?id='.$row["id"];
+    $refund_url = 'refund.php?id='.$row["id"]; */
+    $insfection_url = 'inspaction.php?id='.$row["id"];
 	
     $action 	= "";
-	
+	/* 
     $action.='<span><a class="action-icons c-delete" href="'.$edit_url.'" title="edit"><i class="fa fa-edit text-info mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
 							
-	$action.='<span><a class="action-icons c-approve" href="'.$view_url.'" title="View"><i class="fas fa-eye text-success mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
+	$action.='<span><a class="action-icons c-approve" href="'.$view_url.'" title="View"><i class="fas fa-eye text-success mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>'; */
 	 
 	
 	
 	
 	
 	
-	if($row['assign_status']=='Assigned'){
+	/* if($row['assign_status']=='Assigned'){
         $action.='<span><a class="action-icons c-delete" href="'.$transfer_url.'" title="Transfer"><i class="fas fa-users text-warning mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
         $action.='<span><a class="action-icons c-delete" href="'.$refund_url.'" title="Return"><i class="fas fa-user-minus text-danger mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
 	   }else{
 		$action.='<span><a class="action-icons c-approve" href="'.$assign_url.'" title="Assign"><i class="fas fa-user-plus text-success mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
-       }
+       } */
 	   
-	$action.='<span><a class="action-icons c-approve" href="'.$qr_url.'" title="QR"><i class="fas fa-print text-success mborder" style="padding:2px;margin:1px;border:1px solid gray;"></i></a></span>';
+	$action.='<span><a class="action-icons c-approve" href="'.$insfection_url.'" title="Inspection"><i class="fas fa-eye text-success mborder" style="padding:2px;margin:1px;border:1px solid gray;"> Inspection</i></a></span>';
 	
     return $action;
 

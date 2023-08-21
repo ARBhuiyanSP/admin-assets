@@ -149,7 +149,7 @@ $(document).ready(function(){
     data:{is_categories:is_categories}
    },
    "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-            if ( aData[5] == "Assigned" )
+            if ( aData[6] == "Assigned" )
             {
 				$('td', nRow).css('background-color', '#b01a33');
 				$('td', nRow).css('color', '#fff');
