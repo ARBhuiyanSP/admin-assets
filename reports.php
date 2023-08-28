@@ -43,7 +43,10 @@
 									<div class="col-md-2"></div>
 									<div class="col-md-5">
 										<b style='color:red;'><strong>Employee Report</strong></b>
-											<li>  <a style="font-weight:bold;color:black" href="employee-history.php"> Employee History</a></li>
+											<li>  <a style="font-weight:bold;color:black" href="employee-history.php"> Individual Employee Asset List</a></li>
+											<li>  <a style="font-weight:bold;color:black" href="floor-report.php"> Floor Wise Asset List</a></li>
+											<li>  <a style="font-weight:bold;color:black" href="floor-report.php"> Company Wise Asset List</a></li>
+											
 									</div>
 								</ol>
 							</div>
